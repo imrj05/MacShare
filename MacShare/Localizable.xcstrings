@@ -163,6 +163,9 @@
     "Ask Before Accepting" : {
       "comment" : "Ask before accepting toggle"
     },
+    "Automatically Check for Updates" : {
+      "comment" : "Auto update toggle"
+    },
     "Built natively for macOS with SwiftUI." : {
       "comment" : "About footer"
     },
@@ -180,6 +183,18 @@
     },
     "Changing the device name updates what nearby devices show in their Quick Share list." : {
       "comment" : "Device name footer"
+    },
+    "Check for new versions in the background" : {
+      "comment" : "Auto update help"
+    },
+    "Check for Updates" : {
+      "comment" : "About check for updates button"
+    },
+    "Check for Updates…" : {
+      "comment" : "App menu item to check for updates"
+    },
+    "Check Now" : {
+      "comment" : "Check for updates button"
     },
     "Choose" : {
       "comment" : "Choose folder prompt"
@@ -859,6 +874,9 @@
     },
     "Mac Share" : {
 
+    },
+    "Mac Share %@" : {
+      "comment" : "Updates subtitle"
     },
     "Mac Share for nearby transfers" : {
       "comment" : "About subtitle"
@@ -1933,6 +1951,9 @@
     },
     "Shown to nearby Android devices" : {
       "comment" : "Device name help"
+    },
+    "Software Update" : {
+      "comment" : "Updates label"
     },
     "Start Mac Share automatically when you log in" : {
       "comment" : "Launch at login help"

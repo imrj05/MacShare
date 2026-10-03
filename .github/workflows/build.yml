@@ -87,10 +87,16 @@ jobs:
           test -x "$APP/Contents/MacOS/MacShare"
           test -f "$APP/Contents/Frameworks/libMacShareKit.dylib"
           test -d "$APP/Contents/PlugIns/ShareExtension.appex"
+          test -d "$APP/Contents/Frameworks/Sparkle.framework"
           echo "CFBundleShortVersionString: $(plutil -extract CFBundleShortVersionString raw -o - "$APP/Contents/Info.plist")"
           echo "CFBundleVersion:            $(plutil -extract CFBundleVersion raw -o - "$APP/Contents/Info.plist")"
+          # Spelled out on purpose: GENERATE_INFOPLIST_FILE only emits an allowlist
+          # of keys, so a missing Info.plist entry would silently break updates.
+          echo "SUFeedURL:                  $(plutil -extract SUFeedURL raw -o - "$APP/Contents/Info.plist")"
+          echo "SUPublicEDKey set:          $(plutil -extract SUPublicEDKey raw -o - "$APP/Contents/Info.plist" >/dev/null && echo yes)"
           lipo -info "$APP/Contents/MacOS/MacShare"
           otool -L "$APP/Contents/MacOS/MacShare" | grep -c libMacShareKit.dylib
+          otool -L "$APP/Contents/MacOS/MacShare" | grep -c Sparkle.framework
 
       - name: Package app for upload
         run: |

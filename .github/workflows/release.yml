@@ -38,20 +38,24 @@ jobs:
         id: vars
         env:
           INPUT_TAG: ${{ inputs.tag }}
+          REF_NAME: ${{ github.ref_name }}
         run: |
           set -eo pipefail
-          case "${GITHUB_EVENT_NAME}" in
-            workflow_dispatch|workflow_call)
-              # The inputs context is only populated for these events.
-              TAG="${INPUT_TAG}"
-              ;;
-            *)
-              # Tag pushes resolve from the ref and never touch inputs.
-              TAG="${GITHUB_REF_NAME}"
-              ;;
-          esac
+          # Do not branch on github.event_name here. A reusable workflow started
+          # with workflow_call reports the CALLER's event (auto-tag.yml is a push
+          # to main), so event_name is "push" even though inputs.tag was passed.
+          # The inputs context is populated for workflow_dispatch/workflow_call
+          # and empty on a tag push, so prefer it and fall back to the triggering
+          # ref only when there is no input.
+          TAG="${INPUT_TAG:-${REF_NAME}}"
           if [ -z "${TAG}" ]; then
             echo "error: no tag resolved" >&2
+            exit 1
+          fi
+          # Fail fast instead of publishing a branch name as a version (this is
+          # how "main" once became MacShare-main.dmg on a "main" release).
+          if ! printf '%s' "${TAG#v}" | grep -Eq '^[0-9]+\.[0-9]+(\.[0-9]+)*$'; then
+            echo "error: resolved tag '${TAG}' is not a v<semver> tag" >&2
             exit 1
           fi
           echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
@@ -103,6 +107,29 @@ jobs:
           test -f "${DMG_PATH}"
           echo "DMG_PATH=${DMG_PATH}" >> "$GITHUB_ENV"
           echo "Built ${DMG_PATH}"
+
+      # Publishes the Sparkle feed consumed by SUFeedURL. Skipped with a warning
+      # until the SPARKLE_PRIVATE_KEY repository secret is configured, so releases
+      # keep working without it (only in-app updates stay unavailable).
+      - name: Generate Sparkle appcast
+        env:
+          SPARKLE_PRIVATE_KEY: ${{ secrets.SPARKLE_PRIVATE_KEY }}
+          TAG: ${{ needs.prepare.outputs.tag }}
+          VERSION: ${{ needs.prepare.outputs.version }}
+        run: |
+          set -eo pipefail
+          if [ ! -x .github/scripts/make-appcast.sh ]; then
+            echo "::warning::.github/scripts/make-appcast.sh is missing at ${TAG}; skipping appcast.xml"
+            exit 0
+          fi
+          if [ -z "${SPARKLE_PRIVATE_KEY}" ]; then
+            echo "::warning::SPARKLE_PRIVATE_KEY secret is not set; skipping appcast.xml. In-app updates will not work until it is configured."
+            exit 0
+          fi
+          APPCAST_PATH="$(.github/scripts/make-appcast.sh "${GITHUB_REPOSITORY}" "${TAG}" "${VERSION}" dist | tail -n 1)"
+          test -f "${APPCAST_PATH}"
+          echo "APPCAST_PATH=${APPCAST_PATH}" >> "$GITHUB_ENV"
+          echo "Built ${APPCAST_PATH}"
 
       - name: Generate changelog
         env:
@@ -164,6 +191,10 @@ jobs:
           set -eo pipefail
           TITLE="Mac Share ${VERSION}"
           ASSETS=("${DMG_PATH}" "${DMG_PATH}.sha256")
+          # appcast.xml is optional: it is skipped when SPARKLE_PRIVATE_KEY is unset.
+          if [ -n "${APPCAST_PATH:-}" ] && [ -f "${APPCAST_PATH}" ]; then
+            ASSETS+=("${APPCAST_PATH}")
+          fi
           if gh release view "${TAG}" >/dev/null 2>&1; then
             gh release edit "${TAG}" --title "${TITLE}" --notes-file release-body.md
             gh release upload "${TAG}" "${ASSETS[@]}" --clobber
@@ -181,6 +212,7 @@ jobs:
           path: |
             dist/*.dmg
             dist/*.sha256
+            dist/appcast.xml
             release-notes.md
             release-body.md
           if-no-files-found: error

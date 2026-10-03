@@ -4,6 +4,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @Environment(MacShareStore.self) private var store
+    @ObservedObject private var updater = UpdaterController.shared
     @State private var selectedPane: SettingsPane = .general
     @State private var copiedLink = false
 
@@ -119,6 +120,34 @@ struct SettingsView: View {
                             store.showMenuBarIcon = $0
                             AppDelegate.shared?.setMenuBarIconVisible($0)
                         }
+                    )
+                )
+
+                InsetCardDivider()
+
+                SettingsValueRow(
+                    icon: "arrow.triangle.2.circlepath",
+                    title: String(localized: "Software Update", comment: "Updates label"),
+                    subtitle: String(localized: "Mac Share \(updater.currentVersion)", comment: "Updates subtitle")
+                ) {
+                    Button {
+                        updater.checkForUpdates()
+                    } label: {
+                        Label(String(localized: "Check Now", comment: "Check for updates button"), systemImage: "arrow.down.circle")
+                    }
+                    .buttonStyle(AppButtonStyle(variant: .secondary, isCapsule: true, size: .small))
+                    .disabled(!updater.canCheckForUpdates)
+                }
+
+                InsetCardDivider()
+
+                SettingsToggleRow(
+                    icon: "clock.arrow.circlepath",
+                    title: String(localized: "Automatically Check for Updates", comment: "Auto update toggle"),
+                    subtitle: String(localized: "Check for new versions in the background", comment: "Auto update help"),
+                    isOn: Binding(
+                        get: { updater.automaticallyChecksForUpdates },
+                        set: { updater.automaticallyChecksForUpdates = $0 }
                     )
                 )
             }

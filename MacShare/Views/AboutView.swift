@@ -2,6 +2,7 @@ import AppKit
 import SwiftUI
 
 struct AboutView: View {
+    @ObservedObject private var updater = UpdaterController.shared
     @State private var showingLicense = false
 
     var appVersion: String {
@@ -59,6 +60,14 @@ struct AboutView: View {
                         .font(AppFont.subheadline)
                         .foregroundStyle(AppColors.textSecondary)
                 }
+
+                Button {
+                    updater.checkForUpdates()
+                } label: {
+                    Label(String(localized: "Check for Updates", comment: "About check for updates button"), systemImage: "arrow.triangle.2.circlepath")
+                }
+                .buttonStyle(AppButtonStyle(variant: .secondary, isCapsule: true, size: .small))
+                .disabled(!updater.canCheckForUpdates)
 
                 Text(String(localized: "Share files with nearby Android devices over your local network — without an account, a cloud service, or an internet connection.", comment: "About tagline"))
                     .font(AppFont.body)

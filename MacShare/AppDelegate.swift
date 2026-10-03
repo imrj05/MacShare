@@ -29,6 +29,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         NSApp.appearance = MacShareStore.persistedAppearanceMode.nsAppearance
         setupMenuBar()
         setupNotifications()
+        // Begin Sparkle's scheduled update checks (SUEnableAutomaticChecks).
+        UpdaterController.shared.start()
         NearbyConnectionManager.shared.mainAppDelegate = self
         NearbyConnectionManager.shared.becomeVisible()
         DispatchQueue.main.async {

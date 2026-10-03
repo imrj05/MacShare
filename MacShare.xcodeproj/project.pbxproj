@@ -59,6 +59,8 @@
 		BDD0267598E4C5FB700FC393 /* MacShareStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68C225B4B4C5171FE6EE584D /* MacShareStore.swift */; };
 		C03E73FEF01B4A523172D65F /* AppShell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 571E70B517479F2B3D9ACCA5 /* AppShell.swift */; };
 		C7894309B6DABC1B45C12141 /* AppBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 402058222869E834751151B5 /* AppBadge.swift */; };
+		7A11CE5A0000000000000003 /* Sparkle in Frameworks */ = {isa = PBXBuildFile; productRef = 7A11CE5A0000000000000002 /* Sparkle */; };
+		7A11CE5A0000000000000005 /* UpdaterController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A11CE5A0000000000000004 /* UpdaterController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -187,6 +189,8 @@
 		A26F731043FDB055FC5F119D /* FilterChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterChip.swift; sourceTree = "<group>"; };
 		D5920E1C9F9EF46D65D70815 /* DevicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesView.swift; sourceTree = "<group>"; };
 		D787872AF588B12A0AABFDCC /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
+		7A11CE5A0000000000000004 /* UpdaterController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdaterController.swift; sourceTree = "<group>"; };
+		7A11CE5A0000000000000006 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +208,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				69DCF4942AB8BF7B00CBE2CC /* libMacShareKit.dylib in Frameworks */,
+				7A11CE5A0000000000000003 /* Sparkle in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,6 +308,7 @@
 			children = (
 				69DA9A1129E0BF5100A442DA /* AppDelegate.swift */,
 				2944F2D79722A928BB155798 /* MacShareApp.swift */,
+				7A11CE5A0000000000000004 /* UpdaterController.swift */,
 				D787872AF588B12A0AABFDCC /* Fonts */,
 				D26794A6DB24B906BFA5424A /* Components */,
 				72EB24183421554DBCF91E95 /* Models */,
@@ -316,6 +322,7 @@
 				69DA9A1829E0BF5200A442DA /* MacShare.entitlements */,
 				698DFB0029E362140064F247 /* MacShare-Bridging-Header.h */,
 				69D2C32E29E7898C00EC7E30 /* MainMenu.xib */,
+				7A11CE5A0000000000000006 /* Info.plist */,
 			);
 			path = MacShare;
 			sourceTree = "<group>";
@@ -421,6 +428,7 @@
 			);
 			name = MacShare;
 			packageProductDependencies = (
+				7A11CE5A0000000000000002 /* Sparkle */,
 			);
 			productName = MacShare;
 			productReference = 69DA9A0E29E0BF5100A442DA /* MacShare.app */;
@@ -498,6 +506,7 @@
 			packageReferences = (
 				69DA9A2429E189EF00A442DA /* XCRemoteSwiftPackageReference "swift-protobuf" */,
 				69DA9A3429E1994C00A442DA /* XCRemoteSwiftPackageReference "SwiftECC" */,
+				7A11CE5A0000000000000001 /* XCRemoteSwiftPackageReference "Sparkle" */,
 				693D8DCA2E43771D00E8E7F4 /* XCRemoteSwiftPackageReference "qrcode" */,
 			);
 			productRefGroup = 69DA9A0F29E0BF5100A442DA /* Products */;
@@ -554,6 +563,7 @@
 			files = (
 				698DFB0329E362140064F247 /* MSNotificationCenterHackery.m in Sources */,
 				69DA9A1229E0BF5100A442DA /* AppDelegate.swift in Sources */,
+				7A11CE5A0000000000000005 /* UpdaterController.swift in Sources */,
 				76CC3ADFB83021DA39AB44F3 /* MacShareApp.swift in Sources */,
 				C7894309B6DABC1B45C12141 /* AppBadge.swift in Sources */,
 				35CDB7E34C302E5103E6BC11 /* AppButtonStyle.swift in Sources */,
@@ -835,14 +845,10 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UGY7AHKPKW;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_ATSApplicationFontsPath = Fonts;
+				INFOPLIST_FILE = MacShare/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Mac Share";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = NO;
-				INFOPLIST_KEY_SUPublicEDKey = "mRLSqY8dO2QSGafiBq1sS5QHXIMS5b7CTSfEehlvVpQ=";
-				INFOPLIST_KEY_SUFeedURL = "https://github.com/imrj05/MacShare/releases/latest/download/appcast.xml";
-				INFOPLIST_KEY_SUEnableAutomaticChecks = YES;
-				INFOPLIST_KEY_SUScheduledCheckInterval = 86400;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -876,14 +882,10 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UGY7AHKPKW;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_KEY_ATSApplicationFontsPath = Fonts;
+				INFOPLIST_FILE = MacShare/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Mac Share";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = NO;
-				INFOPLIST_KEY_SUPublicEDKey = "mRLSqY8dO2QSGafiBq1sS5QHXIMS5b7CTSfEehlvVpQ=";
-				INFOPLIST_KEY_SUFeedURL = "https://github.com/imrj05/MacShare/releases/latest/download/appcast.xml";
-				INFOPLIST_KEY_SUEnableAutomaticChecks = YES;
-				INFOPLIST_KEY_SUScheduledCheckInterval = 86400;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -999,6 +1001,14 @@
 				minimumVersion = 3.0.0;
 			};
 		};
+		7A11CE5A0000000000000001 /* XCRemoteSwiftPackageReference "Sparkle" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sparkle-project/Sparkle";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.6.4;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1016,6 +1026,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 69DA9A3429E1994C00A442DA /* XCRemoteSwiftPackageReference "SwiftECC" */;
 			productName = SwiftECC;
+		};
+		7A11CE5A0000000000000002 /* Sparkle */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7A11CE5A0000000000000001 /* XCRemoteSwiftPackageReference "Sparkle" */;
+			productName = Sparkle;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

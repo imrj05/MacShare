@@ -138,6 +138,23 @@ jobs:
           git commit -m "docs: changelog for ${TAG}"
           git push origin "HEAD:${DEFAULT_BRANCH}"
 
+      # The release body is the changelog plus the install instructions, so every
+      # release explains how to get past Gatekeeper. CHANGELOG itself stays
+      # changelog-only, which is why this builds a separate file.
+      - name: Assemble release body
+        run: |
+          set -eo pipefail
+          FOOTER=".github/release-notes-footer.md"
+          cp release-notes.md release-body.md
+          if [ -s "$FOOTER" ]; then
+            printf '\n---\n\n' >> release-body.md
+            cat "$FOOTER" >> release-body.md
+          else
+            echo "warning: $FOOTER is missing; releasing without install instructions" >&2
+          fi
+          echo "--- release body ---"
+          cat release-body.md
+
       - name: Create GitHub Release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -148,12 +165,12 @@ jobs:
           TITLE="Mac Share ${VERSION}"
           ASSETS=("${DMG_PATH}" "${DMG_PATH}.sha256")
           if gh release view "${TAG}" >/dev/null 2>&1; then
-            gh release edit "${TAG}" --title "${TITLE}" --notes-file release-notes.md
+            gh release edit "${TAG}" --title "${TITLE}" --notes-file release-body.md
             gh release upload "${TAG}" "${ASSETS[@]}" --clobber
           elif git rev-parse -q --verify "refs/tags/${TAG}" >/dev/null; then
-            gh release create "${TAG}" "${ASSETS[@]}" --title "${TITLE}" --notes-file release-notes.md
+            gh release create "${TAG}" "${ASSETS[@]}" --title "${TITLE}" --notes-file release-body.md
           else
-            gh release create "${TAG}" "${ASSETS[@]}" --title "${TITLE}" --notes-file release-notes.md --target "${GITHUB_SHA}"
+            gh release create "${TAG}" "${ASSETS[@]}" --title "${TITLE}" --notes-file release-body.md --target "${GITHUB_SHA}"
           fi
           gh release view "${TAG}" --json url --jq '"Release: " + .url'
 
@@ -165,5 +182,6 @@ jobs:
             dist/*.dmg
             dist/*.sha256
             release-notes.md
+            release-body.md
           if-no-files-found: error
           retention-days: 30

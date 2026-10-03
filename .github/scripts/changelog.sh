@@ -56,7 +56,9 @@ git log "$RANGE" --no-merges --pretty=format:'%h%x09%s%x09%an' | awk '
       print "_No changes recorded for this release._"
       exit
     }
-    n = split("Features Fixes Performance Refactoring Documentation Tests Maintenance Other Changes", order, " ")
+    # "|"-separated so the two-word "Other Changes" stays a single label
+    # (splitting on " " would yield "Other" and "Changes" and lose the bucket).
+    n = split("Features|Fixes|Performance|Refactoring|Documentation|Tests|Maintenance|Other Changes", order, "|")
     for (i = 1; i <= n; i++) {
       s = order[i]
       if (s in lines) printf "### %s\n%s\n", s, lines[s]

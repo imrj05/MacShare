@@ -31,11 +31,28 @@
 
 ## Installation
 
-Download the latest build from the [releases page](https://github.com/imrj05/MacShare/releases), unzip it, and move **Mac Share** to your Applications folder.
+Mac Share ships as a DMG on the [releases page](https://github.com/imrj05/MacShare/releases). It is **not notarized by Apple**, so macOS blocks it the first time you open it — that's expected, and these steps get you past it.
 
-Before running for the first time, right-click the app and select **Open**, then confirm that you want to run an app from an unidentified developer. Alternatively, you can use [Sentinel](https://github.com/alienator88/Sentinel) to bypass Gatekeeper.
+1. Download `MacShare-x.y.z.dmg` from the [latest release](https://github.com/imrj05/MacShare/releases/latest). A matching `.dmg.sha256` file is published alongside it if you want to verify the download.
+2. Open the DMG and drag **Mac Share** onto the **Applications** shortcut.
+3. Eject the DMG, then open **Mac Share** from your Applications folder. macOS will block it once — click **Done**.
+4. Open **System Settings → Privacy & Security**, scroll down to **Security**, and click **Open Anyway** next to the message about Mac Share. Authenticate when prompted, then click **Open**.
 
-If you want the app to start on boot, [follow these steps to add Mac Share as a login item](https://support.apple.com/guide/mac-help/open-items-automatically-when-you-log-in-mh15189/mac).
+On macOS 14 (Sonoma) and earlier you can skip step 4: Control-click the app in Finder and choose **Open → Open**. macOS 15 removed that shortcut, which is why the System Settings route above is the reliable one.
+
+### "Mac Share is damaged and can't be opened"
+
+That's the quarantine flag attached to downloads of an unnotarized app, not a broken build. Clear it in Terminal, then open the app again:
+
+```bash
+xattr -dr com.apple.quarantine "/Applications/Mac Share.app"
+```
+
+[Sentinel](https://github.com/alienator88/Sentinel) can handle both this and the first-launch approval for you if you'd rather not touch Terminal.
+
+### Launch at login
+
+Turn on **Launch at Login** in Mac Share's Settings, or [add it as a login item](https://support.apple.com/guide/mac-help/open-items-automatically-when-you-log-in-mh15189/mac) manually.
 
 ## Building from source
 

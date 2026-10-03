@@ -2,4 +2,8 @@
 
 ## v0.0.1 — 2026-10-03
 
-
+### Other Changes
+- Add CI/CD workflows and release scripts for automated tagging, building, and DMG releases (`c35b73e`) — Rajeshwar Kashyap
+- Add Protobuf definitions for Ukey2 and wire format, update licensing, and implement symmetric key extensions (`84ffc73`) — Rajeshwar Kashyap
+- Update README.md to enhance features section and clarify limitations (`d529145`) — Rajeshwar Kashyap
+- Add Share Extension with QR Code functionality (`803385a`) — Rajeshwar Kashyap

@@ -1,0 +1,109 @@
+name: Build
+
+# Runs directly for main/PRs, and is reused by release.yml through workflow_call
+# so the release pipeline builds exactly the same way CI does.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_call:
+    inputs:
+      marketing_version:
+        description: Value for MARKETING_VERSION (CFBundleShortVersionString)
+        required: false
+        type: string
+        default: ''
+      build_number:
+        description: Value for CURRENT_PROJECT_VERSION (CFBundleVersion)
+        required: false
+        type: string
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build MacShare.app
+    # Override without editing this file: repo variable MACOS_RUNNER (e.g. macos-15, xcode-27)
+    runs-on: ${{ vars.MACOS_RUNNER || 'macos-26' }}
+    timeout-minutes: 45
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        env:
+          # Override without editing this file: repo variable XCODE_PATH (e.g. /Applications/Xcode_26.2.app)
+          XCODE_PATH: ${{ vars.XCODE_PATH }}
+        run: |
+          set -eo pipefail
+          if [ -n "${XCODE_PATH}" ]; then
+            sudo xcode-select --switch "${XCODE_PATH}"
+          fi
+          echo "Using: $(xcode-select -p)"
+          xcodebuild -version
+          swift --version
+
+      - name: Resolve Swift package dependencies
+        run: |
+          set -eo pipefail
+          xcodebuild -resolvePackageDependencies \
+            -project MacShare.xcodeproj \
+            -scheme MacShare
+
+      - name: Build (Release)
+        env:
+          MARKETING_VERSION_INPUT: ${{ inputs.marketing_version }}
+          BUILD_NUMBER_INPUT: ${{ inputs.build_number }}
+        run: |
+          set -eo pipefail
+          ARGS=(
+            -project MacShare.xcodeproj
+            -scheme MacShare
+            -configuration Release
+            -destination 'generic/platform=macOS'
+            -derivedDataPath build
+            CODE_SIGNING_ALLOWED=NO
+            CODE_SIGNING_REQUIRED=NO
+            CODE_SIGN_IDENTITY=""
+          )
+          if [ -n "${MARKETING_VERSION_INPUT}" ]; then
+            ARGS+=("MARKETING_VERSION=${MARKETING_VERSION_INPUT}")
+          fi
+          if [ -n "${BUILD_NUMBER_INPUT}" ]; then
+            ARGS+=("CURRENT_PROJECT_VERSION=${BUILD_NUMBER_INPUT}")
+          fi
+          xcodebuild "${ARGS[@]}" build 2>&1 | tee xcodebuild.log | tail -n 60
+
+      # Guards the app/library rename (NearbyShare -> MacShareKit) against regressions.
+      - name: Verify build products
+        run: |
+          set -eo pipefail
+          APP="build/Build/Products/Release/MacShare.app"
+          test -d "$APP"
+          test -x "$APP/Contents/MacOS/MacShare"
+          test -f "$APP/Contents/Frameworks/libMacShareKit.dylib"
+          test -d "$APP/Contents/PlugIns/ShareExtension.appex"
+          echo "CFBundleShortVersionString: $(plutil -extract CFBundleShortVersionString raw -o - "$APP/Contents/Info.plist")"
+          echo "CFBundleVersion:            $(plutil -extract CFBundleVersion raw -o - "$APP/Contents/Info.plist")"
+          lipo -info "$APP/Contents/MacOS/MacShare"
+          otool -L "$APP/Contents/MacOS/MacShare" | grep -c libMacShareKit.dylib
+
+      - name: Package app for upload
+        run: |
+          set -eo pipefail
+          ditto -c -k --sequesterRsrc --keepParent \
+            build/Build/Products/Release/MacShare.app MacShare.app.zip
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: MacShare-app
+          path: |
+            MacShare.app.zip
+            xcodebuild.log
+          if-no-files-found: error
+          retention-days: 14

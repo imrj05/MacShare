@@ -1,0 +1,169 @@
+name: Release
+
+# Publish a release by pushing a tag (v0.1.0), or run this workflow manually and
+# name the tag. Produces: GitHub Release + DMG + .sha256 + generated changelog.
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to publish, e.g. v0.1.0 (created at the current commit if missing)'
+        required: true
+        type: string
+  # Called by auto-tag.yml once it has created the version tag.
+  workflow_call:
+    inputs:
+      tag:
+        description: 'Tag to publish, e.g. v0.1.0'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    name: Resolve version
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.vars.outputs.tag }}
+      version: ${{ steps.vars.outputs.version }}
+    steps:
+      - name: Determine tag and version
+        id: vars
+        env:
+          INPUT_TAG: ${{ inputs.tag }}
+        run: |
+          set -eo pipefail
+          case "${GITHUB_EVENT_NAME}" in
+            workflow_dispatch|workflow_call)
+              # The inputs context is only populated for these events.
+              TAG="${INPUT_TAG}"
+              ;;
+            *)
+              # Tag pushes resolve from the ref and never touch inputs.
+              TAG="${GITHUB_REF_NAME}"
+              ;;
+          esac
+          if [ -z "${TAG}" ]; then
+            echo "error: no tag resolved" >&2
+            exit 1
+          fi
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+          echo "version=${TAG#v}" >> "$GITHUB_OUTPUT"
+          echo "Publishing ${TAG} (version ${TAG#v})"
+
+  build:
+    name: Build
+    needs: prepare
+    uses: ./.github/workflows/build.yml
+    with:
+      marketing_version: ${{ needs.prepare.outputs.version }}
+      # Quoted so the reusable workflow receives a string, not a number.
+      build_number: "${{ github.run_number }}"
+
+  release:
+    name: DMG, changelog and GitHub Release
+    needs: [prepare, build]
+    # Override without editing this file: repo variable MACOS_RUNNER
+    runs-on: ${{ vars.MACOS_RUNNER || 'macos-26' }}
+    timeout-minutes: 30
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          # Tag pushes use github.ref; auto-tag/manual runs pass inputs.tag
+          ref: ${{ inputs.tag || github.ref }}
+
+      - name: Download built app
+        uses: actions/download-artifact@v4
+        with:
+          name: MacShare-app
+
+      - name: Unpack app
+        run: |
+          set -eo pipefail
+          unzip -q MacShare.app.zip
+          test -d MacShare.app
+          chmod +x .github/scripts/*.sh
+
+      - name: Build DMG
+        env:
+          VERSION: ${{ needs.prepare.outputs.version }}
+        run: |
+          set -eo pipefail
+          DMG_PATH="$(.github/scripts/make-dmg.sh MacShare.app "${VERSION}" dist | tail -n 1)"
+          test -f "${DMG_PATH}"
+          echo "DMG_PATH=${DMG_PATH}" >> "$GITHUB_ENV"
+          echo "Built ${DMG_PATH}"
+
+      - name: Generate changelog
+        env:
+          TAG: ${{ needs.prepare.outputs.tag }}
+        run: |
+          set -eo pipefail
+          # On a manual run the tag may not exist yet; document HEAD in that case.
+          if git rev-parse -q --verify "refs/tags/${TAG}" >/dev/null; then
+            REV="${TAG}"
+          else
+            REV="HEAD"
+          fi
+          .github/scripts/changelog.sh "${REV}" > release-notes.md
+          cat release-notes.md
+
+      # Only writes the file back when the tag commit is on the default branch tip;
+      # a protected or moved branch fails this step without failing the release.
+      - name: Update CHANGELOG
+        continue-on-error: true
+        env:
+          TAG: ${{ needs.prepare.outputs.tag }}
+          DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: |
+          set -eo pipefail
+          .github/scripts/update-changelog.sh release-notes.md CHANGELOG
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add CHANGELOG
+          if git diff --cached --quiet; then
+            echo "CHANGELOG already up to date"
+            exit 0
+          fi
+          git commit -m "docs: changelog for ${TAG}"
+          git push origin "HEAD:${DEFAULT_BRANCH}"
+
+      - name: Create GitHub Release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ needs.prepare.outputs.tag }}
+          VERSION: ${{ needs.prepare.outputs.version }}
+        run: |
+          set -eo pipefail
+          TITLE="Mac Share ${VERSION}"
+          ASSETS=("${DMG_PATH}" "${DMG_PATH}.sha256")
+          if gh release view "${TAG}" >/dev/null 2>&1; then
+            gh release edit "${TAG}" --title "${TITLE}" --notes-file release-notes.md
+            gh release upload "${TAG}" "${ASSETS[@]}" --clobber
+          elif git rev-parse -q --verify "refs/tags/${TAG}" >/dev/null; then
+            gh release create "${TAG}" "${ASSETS[@]}" --title "${TITLE}" --notes-file release-notes.md
+          else
+            gh release create "${TAG}" "${ASSETS[@]}" --title "${TITLE}" --notes-file release-notes.md --target "${GITHUB_SHA}"
+          fi
+          gh release view "${TAG}" --json url --jq '"Release: " + .url'
+
+      - name: Upload release assets as workflow artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: MacShare-release
+          path: |
+            dist/*.dmg
+            dist/*.sha256
+            release-notes.md
+          if-no-files-found: error
+          retention-days: 30

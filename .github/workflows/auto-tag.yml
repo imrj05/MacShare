@@ -1,0 +1,50 @@
+name: Auto tag
+
+# Tags v<MARKETING_VERSION> when the app version in the Xcode project changes on
+# main, then runs the release pipeline for that tag.
+#
+# The release workflow is invoked directly rather than relying on the tag push to
+# start it: a tag pushed with the default GITHUB_TOKEN does not create a new
+# workflow run. Manual runs bypass the version-change check, which makes this a
+# "tag and release the current version" button.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'MacShare.xcodeproj/project.pbxproj'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: auto-tag
+  cancel-in-progress: false
+
+jobs:
+  tag:
+    name: Create version tag
+    runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ steps.autotag.outputs.tag }}
+      skipped: ${{ steps.autotag.outputs.skipped }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Detect version change and tag
+        id: autotag
+        run: |
+          set -eo pipefail
+          chmod +x .github/scripts/*.sh
+          .github/scripts/auto-tag.sh
+
+  release:
+    name: Release
+    needs: tag
+    if: needs.tag.outputs.skipped != 'true'
+    uses: ./.github/workflows/release.yml
+    with:
+      tag: ${{ needs.tag.outputs.tag }}

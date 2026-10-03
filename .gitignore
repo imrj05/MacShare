@@ -1,3 +1,12 @@
 DerivedData/
+/build/
 .DS_Store
 xcuserdata/
+
+# Vendored Sparkle release downloads (not referenced by the Xcode project)
+/Sparkle.framework/
+/sparkle.app/
+/Sparkle Test App.app/
+/Symbols/
+/bin/
+/Sparkle.tar.xz

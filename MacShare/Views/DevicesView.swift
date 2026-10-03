@@ -289,7 +289,7 @@ struct DevicePickerRow: View {
             Spacer()
 
             Image(systemName: "paperplane.fill")
-                .font(.system(size: 13, weight: .medium))
+                .font(AppFont.icon(size: 13, weight: .medium))
                 .foregroundStyle(AppColors.accent)
         }
         .padding(.horizontal, AppStyle.Spacing.small)

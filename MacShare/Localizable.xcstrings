@@ -39,7 +39,7 @@
       }
     },
     "About" : {
-      "comment" : "Sidebar section"
+      "comment" : "About page title\nSidebar section"
     },
     "Accept" : {
       "comment" : "Accept button",
@@ -154,11 +154,17 @@
     "All" : {
       "comment" : "Transfer filter"
     },
-    "Appearance" : {
-      "comment" : "Appearance picker"
+    "Allow Android devices on your network to discover this Mac" : {
+      "comment" : "Visibility help"
     },
-    "Ask before accepting" : {
+    "Appearance" : {
+      "comment" : "Appearance label"
+    },
+    "Ask Before Accepting" : {
       "comment" : "Ask before accepting toggle"
+    },
+    "Built natively for macOS with SwiftUI." : {
+      "comment" : "About footer"
     },
     "Cancel" : {
       "comment" : "Cancel\nCancel button"
@@ -172,6 +178,9 @@
     "Cancelling…" : {
       "comment" : "Transfer status"
     },
+    "Changing the device name updates what nearby devices show in their Quick Share list." : {
+      "comment" : "Device name footer"
+    },
     "Choose" : {
       "comment" : "Choose folder prompt"
     },
@@ -180,6 +189,9 @@
     },
     "Choose…" : {
       "comment" : "Choose folder button"
+    },
+    "Close" : {
+
     },
     "Completed" : {
       "comment" : "Transfer filter\nTransfer status"
@@ -190,8 +202,17 @@
     "Configure how Mac Share behaves on this Mac" : {
       "comment" : "Settings subtitle"
     },
-    "Copy Link" : {
-      "comment" : "Copy link button"
+    "Copied" : {
+      "comment" : "Copied\nCopied button"
+    },
+    "Copy License" : {
+      "comment" : "Copy license button"
+    },
+    "Copy Pairing Link" : {
+      "comment" : "Copy pairing link button"
+    },
+    "Copyright (c) 2026 Rajeshwar Kashyap" : {
+      "comment" : "License subtitle"
     },
     "Dark" : {
       "comment" : "Appearance mode"
@@ -307,7 +328,7 @@
       "comment" : "Transfer filter\nTransfer status"
     },
     "Device" : {
-      "comment" : "Device type\nSettings section"
+      "comment" : "Device type\nSettings pane"
     },
     "Device Name" : {
       "comment" : "Device name label"
@@ -427,6 +448,9 @@
     },
     "Devices" : {
       "comment" : "Devices page title\nSidebar section"
+    },
+    "Devices connect directly over your Wi-Fi LAN." : {
+      "comment" : "About feature detail"
     },
     "DeviceSendingFiles" : {
       "extractionState" : "extracted_with_value",
@@ -773,6 +797,9 @@
     "Failed" : {
       "comment" : "Transfer filter\nTransfer status"
     },
+    "Fast Transfers" : {
+      "comment" : "About feature"
+    },
     "file(s)" : {
       "comment" : "Selected file count"
     },
@@ -782,11 +809,14 @@
     "Files you send or receive will appear here." : {
       "comment" : "Transfers empty description"
     },
+    "Follow the system or choose a theme" : {
+      "comment" : "Appearance help"
+    },
     "From %@" : {
       "comment" : "Transfer source"
     },
     "General" : {
-      "comment" : "Settings section"
+      "comment" : "Settings pane"
     },
     "GitHub Repository" : {
       "comment" : "About link"
@@ -800,11 +830,23 @@
     "In Progress" : {
       "comment" : "Active transfers section\nMenu bar active transfers"
     },
+    "Incoming transfers always require your approval" : {
+      "comment" : "Ask before accepting help"
+    },
+    "Keep quick access in the menu bar" : {
+      "comment" : "Menu bar icon help"
+    },
     "Launch at Login" : {
       "comment" : "Launch at login toggle"
     },
-    "Licensed under the Unlicense" : {
-      "comment" : "About license"
+    "License" : {
+      "comment" : "About link"
+    },
+    "Licensed under the MIT License" : {
+      "comment" : "About footer license"
+    },
+    "Licensed under the MIT License." : {
+      "comment" : "License footer"
     },
     "Light" : {
       "comment" : "Appearance mode"
@@ -812,8 +854,14 @@
     "Link" : {
       "comment" : "URL transfer"
     },
+    "Local Network" : {
+      "comment" : "About feature"
+    },
     "Mac Share" : {
 
+    },
+    "Mac Share for nearby transfers" : {
+      "comment" : "About subtitle"
     },
     "Mac Share Settings" : {
 
@@ -823,6 +871,9 @@
     },
     "Make sure your Android device is visible and on the same Wi-Fi network." : {
       "comment" : "No devices alert"
+    },
+    "MIT License" : {
+      "comment" : "License title"
     },
     "more" : {
       "comment" : "More files"
@@ -1186,6 +1237,12 @@
         }
       }
     },
+    "No Account" : {
+      "comment" : "About badge"
+    },
+    "No account, no tracking, and no Google servers involved." : {
+      "comment" : "About feature detail"
+    },
     "No devices found" : {
       "comment" : "Devices empty state"
     },
@@ -1546,6 +1603,15 @@
     "Open Mac Share" : {
       "comment" : "Menu bar open button"
     },
+    "Open Source" : {
+      "comment" : "About feature"
+    },
+    "Pair with Android" : {
+      "comment" : "QR section title"
+    },
+    "Peer-to-peer transfer keeps files on your local network." : {
+      "comment" : "About feature detail"
+    },
     "Phone" : {
       "comment" : "Device type"
     },
@@ -1668,11 +1734,17 @@
         }
       }
     },
+    "Private" : {
+      "comment" : "About badge"
+    },
+    "Private by Default" : {
+      "comment" : "About feature"
+    },
     "Protocol Documentation" : {
       "comment" : "About link"
     },
     "QR Code" : {
-      "comment" : "Settings section"
+      "comment" : "Settings pane"
     },
     "Quit" : {
       "extractionState" : "extracted_with_value",
@@ -1794,15 +1866,21 @@
       "comment" : "Incoming transfer detail"
     },
     "Receiving" : {
-      "comment" : "Settings section\nTransfer status"
+      "comment" : "Settings pane\nTransfer status"
     },
     "Recent Transfers" : {
       "comment" : "Menu bar recent transfers"
     },
+    "Released under the MIT License." : {
+      "comment" : "About feature detail"
+    },
     "Remove" : {
       "comment" : "Context menu"
     },
-    "Save to" : {
+    "Resources" : {
+      "comment" : "About resources section"
+    },
+    "Save To" : {
       "comment" : "Save to label"
     },
     "Scan" : {
@@ -1811,8 +1889,8 @@
     "Scan Again" : {
       "comment" : "Scan again button"
     },
-    "Scan with Google Files or Quick Share on Android" : {
-      "comment" : "QR help text"
+    "Scan this code with Google Files or Quick Share on Android to connect instantly." : {
+      "comment" : "QR section help"
     },
     "Search transfers" : {
       "comment" : "Search placeholder"
@@ -1844,7 +1922,7 @@
     "Settings" : {
       "comment" : "Settings title\nSidebar section"
     },
-    "Share files with nearby Android devices over your local network." : {
+    "Share files with nearby Android devices over your local network — without an account, a cloud service, or an internet connection." : {
       "comment" : "About tagline"
     },
     "Show in Finder" : {
@@ -1853,14 +1931,20 @@
     "Show Menu Bar Icon" : {
       "comment" : "Menu bar icon toggle"
     },
+    "Shown to nearby Android devices" : {
+      "comment" : "Device name help"
+    },
+    "Start Mac Share automatically when you log in" : {
+      "comment" : "Launch at login help"
+    },
     "System" : {
       "comment" : "Appearance mode"
     },
     "Tablet" : {
       "comment" : "Device type"
     },
-    "This name is shown to nearby devices." : {
-      "comment" : "Device name help"
+    "The pairing link contains a temporary public key. Regenerating it invalidates the previous QR code." : {
+      "comment" : "QR footer"
     },
     "To %@" : {
       "comment" : "Transfer destination"
@@ -1987,14 +2071,27 @@
     "Transfers" : {
       "comment" : "Sidebar section\nTransfers page title"
     },
+    "Version %@ (%@)" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Version %1$@ (%2$@)"
+          }
+        }
+      }
+    },
     "Visibility" : {
-      "comment" : "Settings section"
+      "comment" : "Settings pane"
     },
     "Visible" : {
       "comment" : "Visibility state"
     },
     "Visible to nearby devices" : {
-      "comment" : "Visibility state\nVisibility toggle"
+      "comment" : "Visibility state"
+    },
+    "Visible to Nearby Devices" : {
+      "comment" : "Visibility toggle"
     },
     "VisibleToEveryone" : {
       "extractionState" : "stale",
@@ -2123,8 +2220,11 @@
         }
       }
     },
-    "When visible, your Mac appears to everyone on your local network." : {
-      "comment" : "Visibility help"
+    "When visible, your Mac appears to everyone on your local network. Mac Share never talks to Google servers." : {
+      "comment" : "Visibility footer"
+    },
+    "Wi-Fi LAN" : {
+      "comment" : "About badge"
     },
     "Yesterday" : {
       "comment" : "Date group"

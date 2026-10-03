@@ -49,7 +49,7 @@ struct TransfersView: View {
     private var searchField: some View {
         HStack(spacing: AppStyle.Spacing.xSmall) {
             Image(systemName: "magnifyingglass")
-                .font(.system(size: 12, weight: .medium))
+                .font(AppFont.icon(size: 12, weight: .medium))
                 .foregroundStyle(AppColors.textTertiary)
 
             TextField(String(localized: "Search transfers", comment: "Search placeholder"), text: $searchQuery)
@@ -62,7 +62,7 @@ struct TransfersView: View {
                     searchQuery = ""
                 } label: {
                     Image(systemName: "xmark.circle.fill")
-                        .font(.system(size: 12))
+                        .font(AppFont.icon(size: 12))
                         .foregroundStyle(AppColors.textTertiary)
                 }
                 .buttonStyle(.plain)
@@ -206,7 +206,7 @@ struct TransferRowView: View {
     var body: some View {
         HStack(spacing: AppStyle.Spacing.small) {
             Image(systemName: transfer.direction == .incoming ? "arrow.down" : "arrow.up")
-                .font(.system(size: 13, weight: .semibold))
+                .font(AppFont.icon(size: 13, weight: .semibold))
                 .foregroundStyle(transfer.direction == .incoming ? AppColors.accent : AppColors.tagSuccessText)
                 .frame(width: 32, height: 32)
                 .background(

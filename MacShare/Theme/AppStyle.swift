@@ -1,19 +1,19 @@
 import SwiftUI
 
 enum AppFont {
-    static let largeTitle = Font.custom("Avenir Next", size: 38, relativeTo: .largeTitle).weight(.bold)
-    static let title = Font.custom("Avenir Next", size: 30, relativeTo: .title).weight(.bold)
-    static let title2 = Font.custom("Avenir Next", size: 24, relativeTo: .title2).weight(.bold)
-    static let title3 = Font.custom("Avenir Next", size: 19, relativeTo: .title3).weight(.semibold)
-    static let headline = Font.custom("Avenir Next", size: 16, relativeTo: .headline).weight(.semibold)
-    static let body = Font.custom("Avenir Next", size: 14, relativeTo: .body)
-    static let bodyMedium = Font.custom("Avenir Next", size: 14, relativeTo: .body).weight(.medium)
-    static let callout = Font.custom("Avenir Next", size: 13.5, relativeTo: .callout)
-    static let subheadline = Font.custom("Avenir Next", size: 13, relativeTo: .subheadline)
-    static let footnote = Font.custom("Avenir Next", size: 12, relativeTo: .footnote)
-    static let caption = Font.custom("Avenir Next", size: 11.5, relativeTo: .caption)
-    static let captionMedium = Font.custom("Avenir Next", size: 11.5, relativeTo: .caption).weight(.medium)
-    static let pinCode = Font.custom("Avenir Next", size: 38, relativeTo: .largeTitle).weight(.bold).monospacedDigit()
+    static let largeTitle = Font.custom("Manrope", size: 38, relativeTo: .largeTitle).weight(.bold)
+    static let title = Font.custom("Manrope", size: 30, relativeTo: .title).weight(.bold)
+    static let title2 = Font.custom("Manrope", size: 24, relativeTo: .title2).weight(.bold)
+    static let title3 = Font.custom("Manrope", size: 19, relativeTo: .title3).weight(.semibold)
+    static let headline = Font.custom("Manrope", size: 16, relativeTo: .headline).weight(.semibold)
+    static let body = Font.custom("Manrope", size: 14, relativeTo: .body).weight(.regular)
+    static let bodyMedium = Font.custom("Manrope", size: 14, relativeTo: .body).weight(.medium)
+    static let callout = Font.custom("Manrope", size: 13.5, relativeTo: .callout).weight(.regular)
+    static let subheadline = Font.custom("Manrope", size: 13, relativeTo: .subheadline).weight(.regular)
+    static let footnote = Font.custom("Manrope", size: 12, relativeTo: .footnote).weight(.regular)
+    static let caption = Font.custom("Manrope", size: 11.5, relativeTo: .caption).weight(.regular)
+    static let captionMedium = Font.custom("Manrope", size: 11.5, relativeTo: .caption).weight(.medium)
+    static let pinCode = Font.custom("Manrope", size: 38, relativeTo: .largeTitle).weight(.bold).monospacedDigit()
 
     /// SF Symbols should be laid out with the system font so their metrics stay correct.
     static func icon(size: CGFloat, weight: Font.Weight = .regular) -> Font {
@@ -155,7 +155,7 @@ struct IconTile: View {
             RoundedRectangle(cornerRadius: size * 0.28, style: .continuous)
                 .fill(tint.opacity(0.15))
             Image(systemName: systemName)
-                .font(.system(size: size * 0.42, weight: .medium))
+                .font(AppFont.icon(size: size * 0.42, weight: .medium))
                 .foregroundStyle(tint)
                 .symbolEffect(.pulse, options: .repeating, isActive: isPulsing)
         }

@@ -41,7 +41,7 @@ struct TransferProgressCard: View {
         VStack(alignment: .leading, spacing: AppStyle.Spacing.small) {
             HStack(spacing: AppStyle.Spacing.xSmall) {
                 Image(systemName: transfer.direction == .incoming ? "arrow.down" : "arrow.up")
-                    .font(.system(size: 12, weight: .semibold))
+                    .font(AppFont.icon(size: 12, weight: .semibold))
                     .foregroundStyle(transfer.direction == .incoming ? AppColors.accent : AppColors.tagSuccessText)
                     .frame(width: 28, height: 28)
                     .background(
@@ -73,7 +73,7 @@ struct TransferProgressCard: View {
                     store.cancelTransfer(id: transfer.id)
                 } label: {
                     Image(systemName: "xmark")
-                        .font(.system(size: 10, weight: .bold))
+                        .font(AppFont.icon(size: 10, weight: .bold))
                         .foregroundStyle(AppColors.textSecondary)
                         .frame(width: 22, height: 22)
                         .background(AppColors.bgElevated, in: Circle())

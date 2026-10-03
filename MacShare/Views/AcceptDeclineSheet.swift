@@ -35,7 +35,7 @@ struct AcceptDeclineSheet: View {
                 ForEach(request.files.prefix(5)) { file in
                     HStack(spacing: AppStyle.Spacing.small) {
                         Image(systemName: file.sfSymbolName)
-                            .font(.system(size: 13, weight: .medium))
+                            .font(AppFont.icon(size: 13, weight: .medium))
                             .foregroundStyle(AppColors.textSecondary)
                             .frame(width: 22)
                         Text(file.name)

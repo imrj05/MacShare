@@ -11,7 +11,7 @@ If you want to build your own Nearby Share *thing*, you will need:
 1. An implementation of multicast DNS (most modern OSes have it built-in)
 2. A cryptography library that is capable of ECDSA key exchange, AES-CBC, HMAC, and SHA256. OpenSSL will do but is definitely an overkill.
 3. A Protobuf library
-4. [These Protobuf files](/NearbyShare/ProtobufSource) I collected from the Chromium sources so you don't have to
+4. [These Protobuf files](/MacShareKit/ProtobufSource) I collected from the Chromium sources so you don't have to
 
 It is also very helpful to read logcat on your Android device if you're having any trouble. The logging of the Android implementation of Nearby Share is very verbose.
 
@@ -207,7 +207,7 @@ The client and the server send each other a "paired key encryption" frame, wrapp
 
 After that, the client and the server send each other a "paired key result" frame. Both have `status` set to `UNABLE`. Whatever.
 
-These and following protobuf messages are specific to Nearby Share and [are defined here](/MacShare/ProtobufSource/wire_format.proto).
+These and following protobuf messages are specific to Nearby Share and [are defined here](/MacShareKit/ProtobufSource/wire_format.proto).
 
 ### The transfer metadata aka introduction
 

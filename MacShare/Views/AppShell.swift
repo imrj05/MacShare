@@ -128,7 +128,7 @@ struct MenuBarPopoverView: View {
                 onOpenSettings()
             } label: {
                 Image(systemName: "gearshape")
-                    .font(.system(size: 13, weight: .medium))
+                    .font(AppFont.icon(size: 13, weight: .medium))
                     .foregroundStyle(AppColors.textSecondary)
                     .frame(width: 26, height: 26)
                     .background(AppColors.bgElevated, in: Circle())
@@ -143,7 +143,7 @@ struct MenuBarPopoverView: View {
     private var dropZone: some View {
         VStack(spacing: 10) {
             Image(systemName: "arrow.down.doc")
-                .font(.system(size: 24, weight: .medium))
+                .font(AppFont.icon(size: 24, weight: .medium))
                 .foregroundStyle(isDropTarget ? AppColors.accent : AppColors.textSecondary)
 
             Text(String(localized: "Drop files to send", comment: "Menu bar drop zone"))
@@ -191,7 +191,7 @@ struct MenuBarPopoverView: View {
                     } label: {
                         HStack(spacing: 10) {
                             Image(systemName: device.sfSymbolName)
-                                .font(.system(size: 15, weight: .medium))
+                                .font(AppFont.icon(size: 15, weight: .medium))
                                 .foregroundStyle(AppColors.accent)
                                 .frame(width: 24, height: 24)
                                 .background(AppColors.accentSoft, in: RoundedRectangle(cornerRadius: 7, style: .continuous))
@@ -208,7 +208,7 @@ struct MenuBarPopoverView: View {
                             Spacer()
 
                             Image(systemName: "paperplane")
-                                .font(.system(size: 13, weight: .medium))
+                                .font(AppFont.icon(size: 13, weight: .medium))
                                 .foregroundStyle(AppColors.textSecondary)
                         }
                         .padding(.horizontal, 10)
@@ -230,7 +230,7 @@ struct MenuBarPopoverView: View {
                 ForEach(store.recentTransfers.prefix(3)) { transfer in
                     HStack(spacing: 10) {
                         Image(systemName: transfer.direction == .incoming ? "arrow.down.circle.fill" : "arrow.up.circle.fill")
-                            .font(.system(size: 15, weight: .medium))
+                            .font(AppFont.icon(size: 15, weight: .medium))
                             .foregroundStyle(transfer.direction == .incoming ? AppColors.accent : AppColors.tagSuccessText)
                             .frame(width: 24)
 
@@ -272,7 +272,7 @@ struct MenuBarPopoverView: View {
                 NSApp.terminate(nil)
             } label: {
                 Image(systemName: "power")
-                    .font(.system(size: 13, weight: .medium))
+                    .font(AppFont.icon(size: 13, weight: .medium))
                     .foregroundStyle(AppColors.textSecondary)
                     .frame(width: 30, height: 30)
                     .background(AppColors.bgElevated, in: Circle())
@@ -340,7 +340,7 @@ private struct MenuBarActiveTransferRow: View {
         VStack(alignment: .leading, spacing: 7) {
             HStack(spacing: 9) {
                 Image(systemName: transfer.direction == .incoming ? "arrow.down" : "arrow.up")
-                    .font(.system(size: 11, weight: .semibold))
+                    .font(AppFont.icon(size: 11, weight: .semibold))
                     .foregroundStyle(transfer.direction == .incoming ? AppColors.accent : AppColors.tagSuccessText)
                     .frame(width: 24, height: 24)
                     .background(
@@ -366,7 +366,7 @@ private struct MenuBarActiveTransferRow: View {
                     store.cancelTransfer(id: transfer.id)
                 } label: {
                     Image(systemName: "xmark")
-                        .font(.system(size: 9, weight: .bold))
+                        .font(AppFont.icon(size: 9, weight: .bold))
                         .foregroundStyle(AppColors.textSecondary)
                         .frame(width: 20, height: 20)
                         .background(AppColors.bgElevated, in: Circle())

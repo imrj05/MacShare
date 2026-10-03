@@ -7,7 +7,7 @@
 
 import Foundation
 import Cocoa
-import NearbyShare
+import MacShareKit
 import QRCode
 
 class ShareViewController: NSViewController, ShareExtensionDelegate{

@@ -180,7 +180,7 @@ Form {
         .font(.caption).foregroundStyle(.secondary)
 }
 ```
-- Persist via `@AppStorage("deviceName")`; on change, push into `NearbyShare` advertise payload (requires mDNS TXT record update — verify module supports live rename without full re-advertise restart).
+- Persist via `@AppStorage("deviceName")`; on change, push into `MacShareKit` advertise payload (requires mDNS TXT record update — verify module supports live rename without full re-advertise restart).
 
 **Visibility pane:**
 ```
@@ -231,19 +231,19 @@ VStack(spacing: 8) {
     Text("Version \(version)").font(.caption).foregroundStyle(.secondary)
     Link("Protocol Documentation", destination: URL(string: "https://github.com/imrj05/MacShare/blob/main/PROTOCOL.md")!)
     Link("GitHub Repository", destination: URL(string: "https://github.com/imrj05/MacShare")!)
-    Text("Unlicense").font(.caption2).foregroundStyle(.secondary)
+    Text("MIT License").font(.caption2).foregroundStyle(.secondary)
 }
 ```
 
 ### Send Flow
 1. Toolbar `+` (`plus.circle.fill`) → `NSOpenPanel` (`allowsMultipleSelection = true`).
 2. On selection → sheet `DevicePickerView`: `List` of live discovered devices (reuse sidebar's device source), row = `Label(device.name, systemImage: icon)`, tap → confirm.
-3. Push transfer → same session/progress pipeline as Share Extension uses today (`NearbyShare` connection classes) → Progress Screen card appears.
+3. Push transfer → same session/progress pipeline as Share Extension uses today (`MacShareKit` connection classes) → Progress Screen card appears.
 
 ## State/Data Bridging Notes
-- Wrap existing `NearbyShare` discovery/session callback APIs (likely delegate- or closure-based, pre-SwiftUI) in an `@Observable` (macOS 14+) or `ObservableObject` (13+) coordinator class exposing: `discoveredDevices: [Device]`, `activeTransfers: [Transfer]`, `incomingRequest: IncomingRequest?`.
+- Wrap existing `MacShareKit` discovery/session callback APIs (likely delegate- or closure-based, pre-SwiftUI) in an `@Observable` (macOS 14+) or `ObservableObject` (13+) coordinator class exposing: `discoveredDevices: [Device]`, `activeTransfers: [Transfer]`, `incomingRequest: IncomingRequest?`.
 - Recent Transfers needs persistence — not currently modeled (app is receive-and-forget to Downloads). Add lightweight `TransferRecord` struct + local JSON store or `SwiftData` model (macOS 14+) under app support directory; write record on transfer start/complete/fail.
-- Device rename requires checking whether `NearbyShare` module's advertiser reads name dynamically or needs restart — inspect before wiring `TextField` directly to live advertise state.
+- Device rename requires checking whether `MacShareKit` module's advertiser reads name dynamically or needs restart — inspect before wiring `TextField` directly to live advertise state.
 
 ## Accessibility
 - All icon-only buttons get `.accessibilityLabel(...)`.

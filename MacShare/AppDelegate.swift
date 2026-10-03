@@ -1,7 +1,8 @@
 import Cocoa
+import CoreText
 import SwiftUI
 import UserNotifications
-import NearbyShare
+import MacShareKit
 
 class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDelegate, MainAppDelegate {
     static var shared: AppDelegate?
@@ -19,6 +20,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
     override init() {
         super.init()
         AppDelegate.shared = self
+        registerBundledFonts()
     }
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
@@ -32,6 +34,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, UNUserNotificationCenterDele
         DispatchQueue.main.async {
             self.openMainWindow()
         }
+    }
+
+    private func registerBundledFonts() {
+        guard let fontURL = Bundle.main.url(forResource: "Manrope", withExtension: "ttf", subdirectory: "Fonts") else { return }
+        CTFontManagerRegisterFontsForURL(fontURL as CFURL, .process, nil)
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {

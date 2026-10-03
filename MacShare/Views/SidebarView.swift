@@ -135,7 +135,7 @@ struct SidebarView: View {
 
             HStack(spacing: 6) {
                 Image(systemName: "antenna.radiowaves.left.and.right")
-                    .font(.system(size: 11, weight: .medium))
+                    .font(AppFont.icon(size: 11, weight: .medium))
                     .foregroundStyle(AppColors.textTertiary)
                 Text(deviceCountText)
                     .font(AppFont.caption)
@@ -192,7 +192,7 @@ private struct SidebarRow: View {
         Button(action: action) {
             HStack(spacing: 10) {
                 Image(systemName: systemImage)
-                    .font(.system(size: 14, weight: .medium))
+                    .font(AppFont.icon(size: 14, weight: .medium))
                     .frame(width: 20)
                     .foregroundStyle(isSelected ? AppColors.textPrimary : AppColors.textSecondary)
                     .symbolEffect(.bounce, value: isSelected)

@@ -1,7 +1,7 @@
 import AppKit
 import Foundation
 import SwiftUI
-import NearbyShare
+import MacShareKit
 
 @Observable
 class MacShareStore: ShareExtensionDelegate {

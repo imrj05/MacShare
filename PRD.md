@@ -53,7 +53,7 @@ Tabs, each own pane:
 - **Visibility**: Discoverability toggle ("Visible to everyone on your network" — existing limitation from README surfaced here as help text), Show/Hide toggle, optional "Visible for 5 min then hide" timer per Nearby Share convention.
 - **Receiving**: Save-to-folder picker (default Downloads), "Ask before accepting" toggle (always on given protocol, shown as informational/disabled).
 - **QR Code**: displays existing pairing QR full-size, regenerate/copy link button.
-- **About**: version, PROTOCOL.md link, GitHub link, license (Unlicense).
+- **About**: version, PROTOCOL.md link, GitHub link, license (MIT License).
 
 ### 6. QR Send/Receive Screen
 - Receive tab: large QR (current mechanism — `https://quickshare.google/qrcode#key=...`), instructions text ("Scan with Google Files / Quick Share on Android"), copy-link button.
@@ -68,13 +68,13 @@ Tabs, each own pane:
 - Zero custom chrome — system materials (`.regularMaterial`), no custom title bars.
 - App passes Apple's Human Interface Guidelines review informally: correct SF Symbol weights, correct control sizes (`.controlSize(.regular)`), Dynamic Type support.
 - Dark mode / Light mode / System — instant, no relaunch.
-- Settings persist via `@AppStorage` / UserDefaults, keyed to not collide with existing `NearbyShare`/`MacShare` module state.
+- Settings persist via `@AppStorage` / UserDefaults, keyed to not collide with existing `MacShareKit`/`MacShare` module state.
 
 ## Constraints
-- Must integrate with existing `NearbyShare` module (mDNS advertise/browse, protocol state machine) without rewriting transport layer.
+- Must integrate with existing `MacShareKit` module (mDNS advertise/browse, protocol state machine) without rewriting transport layer.
 - Existing Share Extension target unaffected.
 - macOS 13+ minimum (NavigationSplitView requires 13+; project currently unconfirmed min-target — flag for xcodeproj check).
 
 ## Open Questions
-- Does current `NearbyShare` module expose a Combine/async stream for discovered devices, or needs bridging layer for SwiftUI `@Observable`? → verify in `NearbyShare/` source before implementation.
+- Does current `MacShareKit` module expose a Combine/async stream for discovered devices, or needs bridging layer for SwiftUI `@Observable`? → verify in `MacShareKit/` source before implementation.
 - Confirm min deployment target in `MacShare.xcodeproj` project.plist before using `NavigationSplitView` (13+) / `@Observable` macro (14+).

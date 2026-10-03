@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		002E118EACE8AA4E954ADCFD /* DeviceModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6625743257A83D04D89FCCCA /* DeviceModels.swift */; };
+		19C2F267BD59DE299246F760 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = D787872AF588B12A0AABFDCC /* Fonts */; };
 		34D8E6F3A1DA8656526B4C92 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 912D8AD314C61BB1AAC2A669 /* SettingsView.swift */; };
 		35CDB7E34C302E5103E6BC11 /* AppButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 620D4C0AFC913DD663225299 /* AppButtonStyle.swift */; };
 		365079A41784758A38439D82 /* AppStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4E1ABBA6B331E78030E4FFDA /* AppStyle.swift */; };
@@ -41,12 +42,12 @@
 		69DCF4912AB70E9700CBE2CC /* NearbyConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 698DFAE529E2F91A0064F247 /* NearbyConnection.swift */; };
 		69DCF4922AB70E9700CBE2CC /* NearbyConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69DA9A1E29E0C0B300A442DA /* NearbyConnectionManager.swift */; };
 		69DCF4932AB70E9700CBE2CC /* Data+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 69DA9A2029E0CC4E00A442DA /* Data+Extensions.swift */; };
-		69DCF4942AB8BF7B00CBE2CC /* libNearbyShare.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 69DCF4812AB70D0600CBE2CC /* libNearbyShare.dylib */; };
-		69DCF4952AB8BF7B00CBE2CC /* libNearbyShare.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 69DCF4812AB70D0600CBE2CC /* libNearbyShare.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		69DCF4942AB8BF7B00CBE2CC /* libMacShareKit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 69DCF4812AB70D0600CBE2CC /* libMacShareKit.dylib */; };
+		69DCF4952AB8BF7B00CBE2CC /* libMacShareKit.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 69DCF4812AB70D0600CBE2CC /* libMacShareKit.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		69DCF49A2AB8C58500CBE2CC /* SwiftProtobuf in Frameworks */ = {isa = PBXBuildFile; productRef = 69DCF4992AB8C58500CBE2CC /* SwiftProtobuf */; };
 		69DCF49C2AB8C58500CBE2CC /* SwiftECC in Frameworks */ = {isa = PBXBuildFile; productRef = 69DCF49B2AB8C58500CBE2CC /* SwiftECC */; };
-		69DCF49D2AB8C9A500CBE2CC /* libNearbyShare.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 69DCF4812AB70D0600CBE2CC /* libNearbyShare.dylib */; };
-		69DCF49E2AB8C9A500CBE2CC /* libNearbyShare.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 69DCF4812AB70D0600CBE2CC /* libNearbyShare.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		69DCF49D2AB8C9A500CBE2CC /* libMacShareKit.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 69DCF4812AB70D0600CBE2CC /* libMacShareKit.dylib */; };
+		69DCF49E2AB8C9A500CBE2CC /* libMacShareKit.dylib in Embed Libraries */ = {isa = PBXBuildFile; fileRef = 69DCF4812AB70D0600CBE2CC /* libMacShareKit.dylib */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		76CC3ADFB83021DA39AB44F3 /* MacShareApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2944F2D79722A928BB155798 /* MacShareApp.swift */; };
 		78F130BF736C84CAB863E85B /* SidebarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81E0DC606B48D6A7543F6CA1 /* SidebarView.swift */; };
 		89E191AEA48C3A9C1B51A212 /* FilterChip.swift in Sources */ = {isa = PBXBuildFile; fileRef = A26F731043FDB055FC5F119D /* FilterChip.swift */; };
@@ -73,14 +74,14 @@
 			containerPortal = 69DA9A0629E0BF5100A442DA /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 69DCF4802AB70D0600CBE2CC;
-			remoteInfo = NearbyShare;
+			remoteInfo = MacShareKit;
 		};
 		69DCF49F2AB8C9A500CBE2CC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 69DA9A0629E0BF5100A442DA /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 69DCF4802AB70D0600CBE2CC;
-			remoteInfo = NearbyShare;
+			remoteInfo = MacShareKit;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -112,7 +113,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				69DCF4952AB8BF7B00CBE2CC /* libNearbyShare.dylib in Embed Libraries */,
+				69DCF4952AB8BF7B00CBE2CC /* libMacShareKit.dylib in Embed Libraries */,
 			);
 			name = "Embed Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -123,7 +124,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				69DCF49E2AB8C9A500CBE2CC /* libNearbyShare.dylib in Embed Libraries */,
+				69DCF49E2AB8C9A500CBE2CC /* libMacShareKit.dylib in Embed Libraries */,
 			);
 			name = "Embed Libraries";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -178,13 +179,14 @@
 		69DA9A2B29E18CB500A442DA /* offline_wire_formats.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = offline_wire_formats.pb.swift; sourceTree = "<group>"; };
 		69DA9A2C29E18CB500A442DA /* securegcm.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = securegcm.pb.swift; sourceTree = "<group>"; };
 		69DA9A2D29E18CB500A442DA /* securemessage.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = securemessage.pb.swift; sourceTree = "<group>"; };
-		69DCF4812AB70D0600CBE2CC /* libNearbyShare.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libNearbyShare.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
+		69DCF4812AB70D0600CBE2CC /* libMacShareKit.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libMacShareKit.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
 		81DFCD5EA6104F03C400B529 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		81E0DC606B48D6A7543F6CA1 /* SidebarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarView.swift; sourceTree = "<group>"; };
 		879BD7F3F413B4FCBB22AF40 /* TransferProgressCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferProgressCard.swift; sourceTree = "<group>"; };
 		912D8AD314C61BB1AAC2A669 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A26F731043FDB055FC5F119D /* FilterChip.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterChip.swift; sourceTree = "<group>"; };
 		D5920E1C9F9EF46D65D70815 /* DevicesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevicesView.swift; sourceTree = "<group>"; };
+		D787872AF588B12A0AABFDCC /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -193,7 +195,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				693D8DCC2E43771D00E8E7F4 /* QRCode in Frameworks */,
-				69DCF49D2AB8C9A500CBE2CC /* libNearbyShare.dylib in Frameworks */,
+				69DCF49D2AB8C9A500CBE2CC /* libMacShareKit.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -201,7 +203,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				69DCF4942AB8BF7B00CBE2CC /* libNearbyShare.dylib in Frameworks */,
+				69DCF4942AB8BF7B00CBE2CC /* libMacShareKit.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -280,7 +282,7 @@
 				697DDF162E44AAFB00B4749C /* MacShare-InfoPlist.xcstrings */,
 				69DA9A1029E0BF5100A442DA /* MacShare */,
 				699DEBA22AB0573200115D22 /* ShareExtension */,
-				69DCF4822AB70D0600CBE2CC /* NearbyShare */,
+				69DCF4822AB70D0600CBE2CC /* MacShareKit */,
 				698DFAEC29E353220064F247 /* Frameworks */,
 				69DA9A0F29E0BF5100A442DA /* Products */,
 			);
@@ -291,7 +293,7 @@
 			children = (
 				69DA9A0E29E0BF5100A442DA /* MacShare.app */,
 				699DEBA12AB0573200115D22 /* ShareExtension.appex */,
-				69DCF4812AB70D0600CBE2CC /* libNearbyShare.dylib */,
+				69DCF4812AB70D0600CBE2CC /* libMacShareKit.dylib */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -301,6 +303,7 @@
 			children = (
 				69DA9A1129E0BF5100A442DA /* AppDelegate.swift */,
 				2944F2D79722A928BB155798 /* MacShareApp.swift */,
+				D787872AF588B12A0AABFDCC /* Fonts */,
 				D26794A6DB24B906BFA5424A /* Components */,
 				72EB24183421554DBCF91E95 /* Models */,
 				39E28BC8A4846E9D2DE9CD65 /* Store */,
@@ -331,7 +334,7 @@
 			path = Protobuf;
 			sourceTree = "<group>";
 		};
-		69DCF4822AB70D0600CBE2CC /* NearbyShare */ = {
+		69DCF4822AB70D0600CBE2CC /* MacShareKit */ = {
 			isa = PBXGroup;
 			children = (
 				69DA9A2729E18CB500A442DA /* Protobuf */,
@@ -342,7 +345,7 @@
 				69DA9A2029E0CC4E00A442DA /* Data+Extensions.swift */,
 				697DDEEB2E43986400B4749C /* SymmetricKey+Extensions.swift */,
 			);
-			path = NearbyShare;
+			path = MacShareKit;
 			sourceTree = "<group>";
 		};
 		72EB24183421554DBCF91E95 /* Models */ = {
@@ -423,9 +426,9 @@
 			productReference = 69DA9A0E29E0BF5100A442DA /* MacShare.app */;
 			productType = "com.apple.product-type.application";
 		};
-		69DCF4802AB70D0600CBE2CC /* NearbyShare */ = {
+		69DCF4802AB70D0600CBE2CC /* MacShareKit */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 69DCF4892AB70D0600CBE2CC /* Build configuration list for PBXNativeTarget "NearbyShare" */;
+			buildConfigurationList = 69DCF4892AB70D0600CBE2CC /* Build configuration list for PBXNativeTarget "MacShareKit" */;
 			buildPhases = (
 				69DCF47D2AB70D0600CBE2CC /* Headers */,
 				69DCF47E2AB70D0600CBE2CC /* Sources */,
@@ -435,13 +438,13 @@
 			);
 			dependencies = (
 			);
-			name = NearbyShare;
+			name = MacShareKit;
 			packageProductDependencies = (
 				69DCF4992AB8C58500CBE2CC /* SwiftProtobuf */,
 				69DCF49B2AB8C58500CBE2CC /* SwiftECC */,
 			);
-			productName = NearbyShare;
-			productReference = 69DCF4812AB70D0600CBE2CC /* libNearbyShare.dylib */;
+			productName = MacShareKit;
+			productReference = 69DCF4812AB70D0600CBE2CC /* libMacShareKit.dylib */;
 			productType = "com.apple.product-type.library.dynamic";
 		};
 /* End PBXNativeTarget section */
@@ -503,7 +506,7 @@
 			targets = (
 				69DA9A0D29E0BF5100A442DA /* MacShare */,
 				699DEBA02AB0573200115D22 /* ShareExtension */,
-				69DCF4802AB70D0600CBE2CC /* NearbyShare */,
+				69DCF4802AB70D0600CBE2CC /* MacShareKit */,
 			);
 		};
 /* End PBXProject section */
@@ -525,6 +528,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				69DA9A1429E0BF5200A442DA /* Assets.xcassets in Resources */,
+				19C2F267BD59DE299246F760 /* Fonts in Resources */,
 				697DDF132E44AAFB00B4749C /* Localizable.xcstrings in Resources */,
 				697DDF172E44AAFB00B4749C /* MacShare-InfoPlist.xcstrings in Resources */,
 				69D2C32F29E7898C00EC7E30 /* MainMenu.xib in Resources */,
@@ -600,12 +604,12 @@
 		};
 		69DCF4972AB8BF7B00CBE2CC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 69DCF4802AB70D0600CBE2CC /* NearbyShare */;
+			target = 69DCF4802AB70D0600CBE2CC /* MacShareKit */;
 			targetProxy = 69DCF4962AB8BF7B00CBE2CC /* PBXContainerItemProxy */;
 		};
 		69DCF4A02AB8C9A500CBE2CC /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 69DCF4802AB70D0600CBE2CC /* NearbyShare */;
+			target = 69DCF4802AB70D0600CBE2CC /* MacShareKit */;
 			targetProxy = 69DCF49F2AB8C9A500CBE2CC /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -629,7 +633,7 @@
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = NO;
@@ -651,7 +655,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = in.rajeshwar.MacShare.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -666,7 +670,7 @@
 				CODE_SIGN_ENTITLEMENTS = ShareExtension/ShareExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 7;
+				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_INCOMING_NETWORK_CONNECTIONS = NO;
 				ENABLE_OUTGOING_NETWORK_CONNECTIONS = NO;
@@ -688,7 +692,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = in.rajeshwar.MacShare.ShareExtension;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -828,12 +832,17 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UGY7AHKPKW;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_ATSApplicationFontsPath = Fonts;
 				INFOPLIST_KEY_CFBundleDisplayName = "Mac Share";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = NO;
+				INFOPLIST_KEY_SUPublicEDKey = "mRLSqY8dO2QSGafiBq1sS5QHXIMS5b7CTSfEehlvVpQ=";
+				INFOPLIST_KEY_SUFeedURL = "https://github.com/imrj05/MacShare/releases/latest/download/appcast.xml";
+				INFOPLIST_KEY_SUEnableAutomaticChecks = YES;
+				INFOPLIST_KEY_SUScheduledCheckInterval = 86400;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -841,7 +850,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = in.rajeshwar.MacShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -864,12 +873,17 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = UGY7AHKPKW;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_ATSApplicationFontsPath = Fonts;
 				INFOPLIST_KEY_CFBundleDisplayName = "Mac Share";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_LSUIElement = NO;
+				INFOPLIST_KEY_SUPublicEDKey = "mRLSqY8dO2QSGafiBq1sS5QHXIMS5b7CTSfEehlvVpQ=";
+				INFOPLIST_KEY_SUFeedURL = "https://github.com/imrj05/MacShare/releases/latest/download/appcast.xml";
+				INFOPLIST_KEY_SUEnableAutomaticChecks = YES;
+				INFOPLIST_KEY_SUScheduledCheckInterval = 86400;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				INFOPLIST_KEY_NSPrincipalClass = NSApplication;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -877,7 +891,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 0.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = in.rajeshwar.MacShare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -949,7 +963,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		69DCF4892AB70D0600CBE2CC /* Build configuration list for PBXNativeTarget "NearbyShare" */ = {
+		69DCF4892AB70D0600CBE2CC /* Build configuration list for PBXNativeTarget "MacShareKit" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				69DCF4872AB70D0600CBE2CC /* Debug */,

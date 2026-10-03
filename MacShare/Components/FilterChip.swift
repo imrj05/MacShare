@@ -29,7 +29,7 @@ struct FilterChip: View {
             HStack(spacing: 6) {
                 if let symbolName {
                     Image(systemName: symbolName)
-                        .font(.system(size: 11, weight: .semibold))
+                        .font(AppFont.icon(size: 11, weight: .semibold))
                 }
                 Text(title)
                     .font(AppFont.subheadline.weight(isSelected ? .semibold : .regular))

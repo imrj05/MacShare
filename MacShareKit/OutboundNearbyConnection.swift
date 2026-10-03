@@ -1,6 +1,6 @@
 //
 //  OutboundNearbyConnection.swift
-//  NearbyShare
+//  MacShareKit
 //
 //  Created by Grishka on 23.09.2023.
 //

@@ -1,6 +1,6 @@
 //
 //  SymmetricKey+Extensions.swift
-//  NearbyShare
+//  MacShareKit
 //
 //  Created by Grishka on 06.08.2025.
 //

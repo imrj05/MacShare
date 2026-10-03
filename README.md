@@ -107,4 +107,4 @@ Contributions are welcome — open an issue or a pull request.
 
 ## License
 
-Released under the [Unlicense](UNLICENSE).
+Released under the [MIT License](LICENSE).

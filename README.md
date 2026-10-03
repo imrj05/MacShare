@@ -4,6 +4,16 @@
 
 [Protocol documentation](PROTOCOL.md) is available separately.
 
+## Screenshots
+
+| Devices | Transfers |
+| --- | --- |
+| ![Devices screen, searching the network for nearby devices](docs/screenshots/devices.webp) | ![Transfer history with status filters and search](docs/screenshots/transfers.webp) |
+
+| Settings | About |
+| --- | --- |
+| ![Settings screen with general, device, visibility and receiving options](docs/screenshots/settings.webp) | ![About screen showing the version and resources](docs/screenshots/about.webp) |
+
 ## Features
 
 - **Menu bar first.** Send and receive without leaving what you're doing.

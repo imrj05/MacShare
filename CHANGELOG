@@ -1,5 +1,19 @@
 # Changelog
 
+## HEAD — 2026-10-03
+
+### Documentation
+- docs: changelog for v0.0.1 (`800505c`) — github-actions[bot]
+
+### Maintenance
+- chore(release): bump version to 0.0.2 (`f5c5c7d`) — Rajeshwar Kashyap
+
+### Other Changes
+- Add styled DMG, version bump script, and Gatekeeper install instructions (`b01ce66`) — Rajeshwar Kashyap
+- Add screenshots section to README with app screenshots (`e0511d4`) — Rajeshwar Kashyap
+
+**Full Changelog**: https://github.com/imrj05/MacShare/compare/v0.0.1...HEAD
+
 ## v0.0.1 — 2026-10-03
 
 ### Other Changes

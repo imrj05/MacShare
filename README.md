@@ -1,39 +1,49 @@
-**Mac Share** is a partial implementation of [Google's Nearby Share](https://blog.google/products/android/nearby-share/)/Quick Share for macOS.
+# Mac Share
 
-[Protocol documentation](/PROTOCOL.md) is available separately.
+**Mac Share** is a partial implementation of [Google's Nearby Share](https://blog.google/products/android/nearby-share/) / Quick Share for macOS. It lives in your menu bar and sends and receives files and links with nearby Android devices over your local network.
 
-The app lives in your menu bar and saves files to your downloads folder. It's that simple, really.
+[Protocol documentation](PROTOCOL.md) is available separately.
+
+## Features
+
+- **Menu bar first.** Send and receive without leaving what you're doing.
+- **Custom interface.** A dark-first SwiftUI design with a matching light appearance, a custom sidebar, and a menu-bar widget.
+- **Live transfers.** Progress with percentage, speed and ETA, plus one-tap cancel for both incoming and outgoing transfers.
+- **Menu bar widget.** See in-progress transfers with live progress without opening the main window.
+- **Transfer history.** Search and filter by status — completed, failed, declined, or cancelled.
+- **Share Extension.** Send files straight from Finder or any app's Share menu.
+- **QR pairing** for Android devices that need it.
+
+## Requirements
+
+- macOS 14 (Sonoma) or later.
+- An Android device on the same Wi-Fi network.
+
+## Installation
+
+Download the latest build from the [releases page](https://github.com/imrj05/MacShare/releases), unzip it, and move **Mac Share** to your Applications folder.
+
+Before running for the first time, right-click the app and select **Open**, then confirm that you want to run an app from an unidentified developer. Alternatively, you can use [Sentinel](https://github.com/alienator88/Sentinel) to bypass Gatekeeper.
+
+If you want the app to start on boot, [follow these steps to add Mac Share as a login item](https://support.apple.com/guide/mac-help/open-items-automatically-when-you-log-in-mh15189/mac).
+
+## Building from source
+
+1. Open `MacShare.xcodeproj` in Xcode.
+2. Select the **MacShare** scheme and run it (⌘R).
+
+The Share Extension is embedded in the app automatically.
 
 ## Limitations
 
 * **Wi-Fi LAN only**. Your Android device and your Mac need to be on the same network for this app to work. Google's implementation supports multiple mediums, including Wi-Fi Direct, Wi-Fi hotspot, Bluetooth, some kind of 5G peer-to-peer connection, and even a WebRTC-based protocol that goes over the internet through Google servers. Wi-Fi direct isn't supported on macOS (Apple has their own, incompatible, AWDL thing, used in AirDrop). Bluetooth needs further reverse engineering.
 * **Visible to everyone on your network at all times** while the app is running. Limited visibility (contacts etc) requires talking to Google servers, and becoming temporarily visible requires listening for whatever triggers the "device nearby is sharing" notification.
 
-## Installation
-
-Download the latest build from the releases section, unzip, move to your applications folder.
-
-Before running for the first time, right-click the app and select "Open", then confirm running an app from unidentified developer.
-
-Alternatively, you can use [Sentinel](https://github.com/alienator88/Sentinel) to bypass Gatekeeper.
-
-If you want the app to start on boot, [follow these steps to add Mac Share as a login item.](https://support.apple.com/guide/mac-help/open-items-automatically-when-you-log-in-mh15189/mac)
-
-#### Installation with Homebrew
-
-```
-brew install --cask mac-share && sudo xattr -r -d com.apple.quarantine "/Applications/MacShare.app"
-```
-
-## Contributing
-
-Pull requests that change the readme will not be accepted.
-
 ## FAQ
 
-#### The app would not open because "Apple cannot check it for malicious software", you gotta fix your shit
+#### The app won't open because macOS says it can't check it for malicious software
 
-Right-click the app in Finder and select "Open". Or, open System Settings -> Privacy and security, scroll down and allow the app to run.
+Right-click the app in Finder and select **Open**. Or open System Settings → Privacy & Security, scroll down, and allow the app to run.
 
 #### My Android device doesn't see my Mac
 
@@ -90,3 +100,11 @@ Because I don't want to pay Apple $99 a year for the privilege of developing mac
 #### Why not the other way around, i.e. AirDrop on Android?
 
 While I am an Android developer, and I have looked into this, this is nigh-impossible. AirDrop uses [AWDL](https://stackoverflow.com/questions/19587701/what-is-awdl-apple-wireless-direct-link-and-how-does-it-work), Apple's own proprietary take on peer-to-peer Wi-Fi. This works on top of 802.11 itself, the low-level Wi-Fi protocol, and thus can not be implemented without messing around with the Wi-Fi adapter drivers and raw packets and all that. It might be possible on Android, but it would at the very least require root and possibly a custom kernel. There is [an open-source implementation of AWDL and AirDrop for Linux](https://owlink.org/code/).
+
+## Contributing
+
+Contributions are welcome — open an issue or a pull request.
+
+## License
+
+Released under the [Unlicense](UNLICENSE).

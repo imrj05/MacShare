@@ -1,0 +1,612 @@
+---
+import '../styles/global.css';
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/png" href="/favicon.png" />
+		<link rel="apple-touch-icon" href="/app-icon.png" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Mac Share — Send files between Mac and Android</title>
+		<meta
+			name="description"
+			content="A macOS menu bar app for sending files between Mac and Android over your local network. No cables, no cloud, no account."
+		/>
+		<meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)" />
+		<meta name="theme-color" content="#0b0c0b" media="(prefers-color-scheme: dark)" />
+		<link rel="preload" href="/fonts/Manrope.ttf" as="font" type="font/ttf" crossorigin />
+		<script is:inline>
+			try {
+				var t = localStorage.getItem("theme");
+				if (t === "light" || t === "dark") document.documentElement.dataset.theme = t;
+			} catch (e) {}
+		</script>
+	</head>
+	<body>
+		<svg xmlns="http://www.w3.org/2000/svg" style="display:none" aria-hidden="true">
+			<symbol id="i-send" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+				<path d="M22 2 11 13"></path><path d="M22 2 15 22l-4-9-9-4z"></path>
+			</symbol>
+			<symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+				<path d="M5 12.55a11 11 0 0 1 14.08 0"></path><path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path><path d="M12 20h.01"></path>
+			</symbol>
+			<symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+				<circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path>
+			</symbol>
+			<symbol id="i-sliders" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+				<path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3"></path><path d="M1 14h6M9 8h6M17 16h6"></path>
+			</symbol>
+			<symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+				<circle cx="12" cy="12" r="9"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path>
+			</symbol>
+			<symbol id="i-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+				<polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+			</symbol>
+			<symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+				<rect x="5" y="11" width="14" height="9" rx="2"></rect><path d="M8 11V8a4 4 0 0 1 8 0v3"></path>
+			</symbol>
+			<symbol id="i-qr" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+				<rect x="4" y="4" width="6" height="6" rx="1"></rect><rect x="14" y="4" width="6" height="6" rx="1"></rect><rect x="4" y="14" width="6" height="6" rx="1"></rect><path d="M14 14h3v3h-3zM20 14v.01M14 20h.01M20 20v.01"></path>
+			</symbol>
+			<symbol id="i-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+				<path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+			</symbol>
+			<symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<path d="m5 12 4.5 4.5L19 7"></path>
+			</symbol>
+			<symbol id="i-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+				<path d="M12 5v14"></path><path d="m6 13 6 6 6-6"></path>
+			</symbol>
+			<symbol id="i-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+				<path d="M12 19V5"></path><path d="m6 11 6-6 6 6"></path>
+			</symbol>
+		</svg>
+
+		<header class="nav">
+			<div class="container">
+				<a class="brand" href="/">
+					<img src="/app-icon.png" width="26" height="26" alt="" />
+					Mac Share
+				</a>
+				<nav class="nav-links" aria-label="Main">
+					<a class="nav-link" href="#features">Features</a>
+					<a class="nav-link" href="#details">Under the hood</a>
+					<a class="nav-link" href="#faq">FAQ</a>
+					<a class="nav-link" href="https://github.com/imrj05/MacShare">GitHub</a>
+					<button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle color theme">
+						<svg class="t-moon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+						<svg class="t-sun" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path></svg>
+					</button>
+					<a class="btn btn-primary" href="https://github.com/imrj05/MacShare/releases">Download</a>
+				</nav>
+			</div>
+		</header>
+
+		<main>
+			<section class="hero">
+				<div class="container">
+					<div class="badges">
+						<span class="badge">Menu bar app</span>
+						<span class="badge">Local network</span>
+						<span class="badge">No cloud</span>
+					</div>
+					<h1>Send files between Mac and Android.</h1>
+					<p class="sub">Over your local network. No cables, no cloud, no account.</p>
+					<div class="cta">
+						<a class="btn btn-primary btn-lg" href="https://github.com/imrj05/MacShare/releases">Download for macOS</a>
+						<a class="btn btn-secondary btn-lg" href="https://github.com/imrj05/MacShare">View on GitHub</a>
+					</div>
+					<p class="fine">Free · MIT licensed · macOS 14+ · Android 6+</p>
+				</div>
+			</section>
+
+			<div class="mockup-wrap">
+				<div class="container">
+					<div class="mockup" aria-hidden="true">
+						<div class="mockup-bar">
+							<span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+						</div>
+						<div class="mockup-body">
+							<div class="mockup-side">
+								<div class="mock-brand">
+									<img src="/app-icon.png" width="28" height="28" alt="" />
+									<div>
+										<p class="mock-name">Mac Share</p>
+										<p class="mock-sub">Nearby transfer</p>
+									</div>
+								</div>
+								<div class="mock-send">
+									<svg width="13" height="13"><use href="#i-send"></use></svg>
+									Send Files
+								</div>
+								<nav class="mock-nav">
+									<div class="mock-item active"><svg width="14" height="14"><use href="#i-wifi"></use></svg> Devices</div>
+									<div class="mock-item"><svg width="14" height="14"><use href="#i-clock"></use></svg> Transfers</div>
+									<div class="mock-item"><svg width="14" height="14"><use href="#i-sliders"></use></svg> Settings</div>
+									<div class="mock-item"><svg width="14" height="14"><use href="#i-info"></use></svg> About</div>
+								</nav>
+								<div class="mock-status">
+									<p class="mock-status-line"><span class="dot-live"></span> Visible to nearby devices</p>
+									<p class="mock-status-sub"><svg width="12" height="12"><use href="#i-wifi"></use></svg> Searching for devices…</p>
+								</div>
+							</div>
+							<div class="mockup-main">
+								<div class="mock-head">
+									<div>
+										<p class="mock-title">Devices</p>
+										<p class="mock-desc">Pixel 8 is on your network</p>
+									</div>
+									<div class="mock-actions">
+										<span class="mock-btn secondary"><svg width="12" height="12"><use href="#i-refresh"></use></svg> Scan</span>
+										<span class="mock-btn primary"><svg width="12" height="12"><use href="#i-send"></use></svg> Send</span>
+									</div>
+								</div>
+								<div class="mock-card mock-device">
+									<div>
+										<p class="mock-device-name">Pixel 8</p>
+										<p class="mock-device-type">Phone</p>
+									</div>
+									<div class="mock-busy"><span class="spinner"></span> Sending…</div>
+								</div>
+								<div class="mock-card mock-transfer">
+									<div class="mock-file">
+										<span>backup_2024.zip</span>
+										<span class="size">486 MB</span>
+									</div>
+									<div class="mock-bar"><span></span></div>
+									<div class="mock-meta"><span>12.4 MB/s</span><span>68%</span></div>
+								</div>
+								<div class="mock-card">
+									<p class="mock-history-label">Recent</p>
+									<div class="mock-history-row">
+										<span class="mock-history-file">IMG_2043.jpg</span>
+										<span class="mock-history-status"><svg width="11" height="11"><use href="#i-check"></use></svg> Received</span>
+									</div>
+									<div class="mock-history-row">
+										<span class="mock-history-file">project_final.mov</span>
+										<span class="mock-history-status"><svg width="11" height="11"><use href="#i-check"></use></svg> Received</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<section class="features" id="features">
+				<div class="container">
+					<div class="feature-row">
+						<div class="feature-copy">
+							<p class="kicker">Discovery</p>
+							<h2>Devices appear without the pairing dance.</h2>
+							<p class="lead">
+								Mac Share advertises and browses over mDNS, so any phone running
+								Google Files or Quick Share shows up the moment it joins your Wi-Fi.
+							</p>
+							<ul class="feature-list">
+								<li>
+									<strong>Live discovery</strong>
+									<span>Devices come and go as they join or leave the network — the list is always current.</span>
+								</li>
+								<li>
+									<strong>Nothing to pair</strong>
+									<span>No codes to type, no accounts to link. Open the app and they're there.</span>
+								</li>
+								<li>
+									<strong>Android does the rest</strong>
+									<span>Google Files and Quick Share work as they are. Nothing to install on the phone.</span>
+								</li>
+							</ul>
+						</div>
+						<div class="feature-media">
+							<div class="shot">
+								<p class="shot-label">Nearby</p>
+								<div class="devrow">
+									<div>
+										<p class="devrow-name">Pixel 8</p>
+										<p class="devrow-type">Phone · Android 15</p>
+									</div>
+									<span class="chip-btn"><svg width="11" height="11"><use href="#i-send"></use></svg> Send</span>
+								</div>
+								<div class="devrow">
+									<div>
+										<p class="devrow-name">OnePlus 12</p>
+										<p class="devrow-type">Phone · Android 14</p>
+									</div>
+									<span class="chip-btn"><svg width="11" height="11"><use href="#i-send"></use></svg> Send</span>
+								</div>
+								<div class="devrow">
+									<div>
+										<p class="devrow-name">Studio Tablet</p>
+										<p class="devrow-type">Tablet · Android 14</p>
+									</div>
+									<span class="chip-btn"><svg width="11" height="11"><use href="#i-send"></use></svg> Send</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="feature-row rev">
+						<div class="feature-copy">
+							<p class="kicker">Sending</p>
+							<h2>Send from the menu bar, Finder, or the app.</h2>
+							<p class="lead">
+								Pick your files and go — the same transfer pipeline runs whether you
+								start from the menu bar popover, the Finder share menu, or the full
+								window.
+							</p>
+							<ul class="feature-list">
+								<li>
+									<strong>Menu bar quick send</strong>
+									<span>Click the icon, choose a device, drop in files. No window needed.</span>
+								</li>
+								<li>
+									<strong>Finder share extension</strong>
+									<span>Right-click any file → Share → Mac Share, straight from Finder.</span>
+								</li>
+								<li>
+									<strong>Multiple files at once</strong>
+									<span>Select as many as you like — they queue into one clean transfer.</span>
+								</li>
+							</ul>
+						</div>
+						<div class="feature-media">
+							<div class="shot">
+								<div class="menubar">
+									<div class="menubar-left">
+										<img class="menubar-icon" src="/app-icon.png" width="15" height="15" alt="" />
+										<span class="menubar-active"><svg width="11" height="11"><use href="#i-send"></use></svg> Mac Share</span>
+									</div>
+									<div class="menubar-right"><span>Wi-Fi</span><span>9:41</span></div>
+								</div>
+								<div class="popover">
+									<div class="popover-row">
+										<span class="row-main"><svg width="13" height="13"><use href="#i-send"></use></svg> Send Files…</span>
+									</div>
+									<div class="popover-row">
+										<span class="row-main">Pixel 8</span>
+										<span class="chip-btn">Send</span>
+									</div>
+									<div class="popover-row">
+										<span class="muted">backup_2024.zip · 68%</span>
+										<span class="muted">12.4 MB/s</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="feature-row">
+						<div class="feature-copy">
+							<p class="kicker">History</p>
+							<h2>Every transfer, remembered.</h2>
+							<p class="lead">
+								Recent transfers group by day with direction, peer, size, and status —
+								so you can find yesterday's file or retry the one that failed.
+							</p>
+							<ul class="feature-list">
+								<li>
+									<strong>Grouped by day</strong>
+									<span>Today, Yesterday, then dates — the Finder and Messages pattern.</span>
+								</li>
+								<li>
+									<strong>Retry and reveal</strong>
+									<span>One click to retry a failed send or show a finished file in Finder.</span>
+								</li>
+								<li>
+									<strong>Search anything</strong>
+									<span>Filter by filename or device from the toolbar.</span>
+								</li>
+							</ul>
+						</div>
+						<div class="feature-media">
+							<div class="shot">
+								<p class="shot-label">Today</p>
+								<div class="transrow">
+									<span class="transrow-icon"><svg width="14" height="14"><use href="#i-down"></use></svg></span>
+									<div class="transrow-body">
+										<p class="transrow-name">IMG_2043.jpg</p>
+										<p class="transrow-meta">Pixel 8 · 4.2 MB · 2 min ago</p>
+									</div>
+									<span class="transrow-status ok"><svg width="11" height="11"><use href="#i-check"></use></svg> Received</span>
+								</div>
+								<div class="transrow">
+									<span class="transrow-icon"><svg width="14" height="14"><use href="#i-up"></use></svg></span>
+									<div class="transrow-body">
+										<p class="transrow-name">project_final.mov</p>
+										<p class="transrow-meta">Pixel 8 · 182 MB · 18 min ago</p>
+									</div>
+									<span class="transrow-status"><svg width="11" height="11"><use href="#i-check"></use></svg> Sent</span>
+								</div>
+								<div class="transrow">
+									<span class="transrow-icon"><svg width="14" height="14"><use href="#i-down"></use></svg></span>
+									<div class="transrow-body">
+										<p class="transrow-name">invoice_2024.pdf</p>
+										<p class="transrow-meta">OnePlus 12 · 2.4 MB · 1 h ago</p>
+									</div>
+									<span class="transrow-status ok"><svg width="11" height="11"><use href="#i-check"></use></svg> Received</span>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="feature-row rev">
+						<div class="feature-copy">
+							<p class="kicker">Confirmation</p>
+							<h2>Nothing moves until the codes match.</h2>
+							<p class="lead">
+								Every incoming transfer shows the sender, file count, and total size
+								before anything happens — plus a short code both devices display.
+							</p>
+							<ul class="feature-list">
+								<li>
+									<strong>Six digits, both sides</strong>
+									<span>The Android device shows the same code. Compare, then accept.</span>
+								</li>
+								<li>
+									<strong>Details up front</strong>
+									<span>Sender name, per-file list, and total size before you commit.</span>
+								</li>
+								<li>
+									<strong>Auto-decline</strong>
+									<span>If time runs out, the request quietly expires.</span>
+								</li>
+							</ul>
+						</div>
+						<div class="feature-media">
+							<div class="shot">
+								<div class="pin">
+									<p class="pin-sender">Pixel 8 wants to send 3 files · 84 MB</p>
+									<p class="pin-code">481 902</p>
+									<div class="pin-actions">
+										<span class="btn btn-secondary">Decline</span>
+										<span class="btn btn-primary">Accept</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="feature-row">
+						<div class="feature-copy">
+							<p class="kicker">QR pairing</p>
+							<h2>Point a camera. Connect.</h2>
+							<p class="lead">
+								When the phone starts the transfer, show the QR code and scan it with
+								Google Files or Quick Share — the pairing happens without typing a
+								thing.
+							</p>
+							<ul class="feature-list">
+								<li>
+									<strong>Built for scanners</strong>
+									<span>Full-size, high contrast, generated fresh for each session.</span>
+								</li>
+								<li>
+									<strong>Copy the link instead</strong>
+									<span>Send the pairing link to the device any way you like.</span>
+								</li>
+								<li>
+									<strong>Works both directions</strong>
+									<span>Scan in, or send out — the same protocol underneath.</span>
+								</li>
+							</ul>
+						</div>
+						<div class="feature-media">
+							<div class="shot">
+								<div class="qr">
+									<div class="qr-tile">
+										<svg viewBox="0 0 84 84" aria-hidden="true"><g fill="currentColor"><rect x="0" y="0" width="4" height="4"/><rect x="4" y="0" width="4" height="4"/><rect x="8" y="0" width="4" height="4"/><rect x="12" y="0" width="4" height="4"/><rect x="16" y="0" width="4" height="4"/><rect x="20" y="0" width="4" height="4"/><rect x="24" y="0" width="4" height="4"/><rect x="36" y="0" width="4" height="4"/><rect x="40" y="0" width="4" height="4"/><rect x="44" y="0" width="4" height="4"/><rect x="56" y="0" width="4" height="4"/><rect x="60" y="0" width="4" height="4"/><rect x="64" y="0" width="4" height="4"/><rect x="68" y="0" width="4" height="4"/><rect x="72" y="0" width="4" height="4"/><rect x="76" y="0" width="4" height="4"/><rect x="80" y="0" width="4" height="4"/><rect x="0" y="4" width="4" height="4"/><rect x="24" y="4" width="4" height="4"/><rect x="40" y="4" width="4" height="4"/><rect x="44" y="4" width="4" height="4"/><rect x="48" y="4" width="4" height="4"/><rect x="56" y="4" width="4" height="4"/><rect x="80" y="4" width="4" height="4"/><rect x="0" y="8" width="4" height="4"/><rect x="8" y="8" width="4" height="4"/><rect x="12" y="8" width="4" height="4"/><rect x="16" y="8" width="4" height="4"/><rect x="24" y="8" width="4" height="4"/><rect x="32" y="8" width="4" height="4"/><rect x="40" y="8" width="4" height="4"/><rect x="44" y="8" width="4" height="4"/><rect x="56" y="8" width="4" height="4"/><rect x="64" y="8" width="4" height="4"/><rect x="68" y="8" width="4" height="4"/><rect x="72" y="8" width="4" height="4"/><rect x="80" y="8" width="4" height="4"/><rect x="0" y="12" width="4" height="4"/><rect x="8" y="12" width="4" height="4"/><rect x="12" y="12" width="4" height="4"/><rect x="16" y="12" width="4" height="4"/><rect x="24" y="12" width="4" height="4"/><rect x="36" y="12" width="4" height="4"/><rect x="48" y="12" width="4" height="4"/><rect x="56" y="12" width="4" height="4"/><rect x="64" y="12" width="4" height="4"/><rect x="68" y="12" width="4" height="4"/><rect x="72" y="12" width="4" height="4"/><rect x="80" y="12" width="4" height="4"/><rect x="0" y="16" width="4" height="4"/><rect x="8" y="16" width="4" height="4"/><rect x="12" y="16" width="4" height="4"/><rect x="16" y="16" width="4" height="4"/><rect x="24" y="16" width="4" height="4"/><rect x="40" y="16" width="4" height="4"/><rect x="44" y="16" width="4" height="4"/><rect x="56" y="16" width="4" height="4"/><rect x="64" y="16" width="4" height="4"/><rect x="68" y="16" width="4" height="4"/><rect x="72" y="16" width="4" height="4"/><rect x="80" y="16" width="4" height="4"/><rect x="0" y="20" width="4" height="4"/><rect x="24" y="20" width="4" height="4"/><rect x="32" y="20" width="4" height="4"/><rect x="36" y="20" width="4" height="4"/><rect x="40" y="20" width="4" height="4"/><rect x="56" y="20" width="4" height="4"/><rect x="80" y="20" width="4" height="4"/><rect x="0" y="24" width="4" height="4"/><rect x="4" y="24" width="4" height="4"/><rect x="8" y="24" width="4" height="4"/><rect x="12" y="24" width="4" height="4"/><rect x="16" y="24" width="4" height="4"/><rect x="20" y="24" width="4" height="4"/><rect x="24" y="24" width="4" height="4"/><rect x="48" y="24" width="4" height="4"/><rect x="56" y="24" width="4" height="4"/><rect x="60" y="24" width="4" height="4"/><rect x="64" y="24" width="4" height="4"/><rect x="68" y="24" width="4" height="4"/><rect x="72" y="24" width="4" height="4"/><rect x="76" y="24" width="4" height="4"/><rect x="80" y="24" width="4" height="4"/><rect x="4" y="32" width="4" height="4"/><rect x="8" y="32" width="4" height="4"/><rect x="12" y="32" width="4" height="4"/><rect x="16" y="32" width="4" height="4"/><rect x="20" y="32" width="4" height="4"/><rect x="24" y="32" width="4" height="4"/><rect x="28" y="32" width="4" height="4"/><rect x="36" y="32" width="4" height="4"/><rect x="40" y="32" width="4" height="4"/><rect x="44" y="32" width="4" height="4"/><rect x="48" y="32" width="4" height="4"/><rect x="64" y="32" width="4" height="4"/><rect x="72" y="32" width="4" height="4"/><rect x="76" y="32" width="4" height="4"/><rect x="20" y="36" width="4" height="4"/><rect x="24" y="36" width="4" height="4"/><rect x="28" y="36" width="4" height="4"/><rect x="32" y="36" width="4" height="4"/><rect x="36" y="36" width="4" height="4"/><rect x="48" y="36" width="4" height="4"/><rect x="56" y="36" width="4" height="4"/><rect x="68" y="36" width="4" height="4"/><rect x="72" y="36" width="4" height="4"/><rect x="80" y="36" width="4" height="4"/><rect x="8" y="40" width="4" height="4"/><rect x="12" y="40" width="4" height="4"/><rect x="24" y="40" width="4" height="4"/><rect x="28" y="40" width="4" height="4"/><rect x="32" y="40" width="4" height="4"/><rect x="44" y="40" width="4" height="4"/><rect x="48" y="40" width="4" height="4"/><rect x="52" y="40" width="4" height="4"/><rect x="72" y="40" width="4" height="4"/><rect x="4" y="44" width="4" height="4"/><rect x="12" y="44" width="4" height="4"/><rect x="16" y="44" width="4" height="4"/><rect x="32" y="44" width="4" height="4"/><rect x="40" y="44" width="4" height="4"/><rect x="52" y="44" width="4" height="4"/><rect x="64" y="44" width="4" height="4"/><rect x="0" y="48" width="4" height="4"/><rect x="4" y="48" width="4" height="4"/><rect x="8" y="48" width="4" height="4"/><rect x="24" y="48" width="4" height="4"/><rect x="28" y="48" width="4" height="4"/><rect x="40" y="48" width="4" height="4"/><rect x="48" y="48" width="4" height="4"/><rect x="60" y="48" width="4" height="4"/><rect x="72" y="48" width="4" height="4"/><rect x="80" y="48" width="4" height="4"/><rect x="32" y="52" width="4" height="4"/><rect x="44" y="52" width="4" height="4"/><rect x="48" y="52" width="4" height="4"/><rect x="60" y="52" width="4" height="4"/><rect x="68" y="52" width="4" height="4"/><rect x="72" y="52" width="4" height="4"/><rect x="76" y="52" width="4" height="4"/><rect x="0" y="56" width="4" height="4"/><rect x="4" y="56" width="4" height="4"/><rect x="8" y="56" width="4" height="4"/><rect x="12" y="56" width="4" height="4"/><rect x="16" y="56" width="4" height="4"/><rect x="20" y="56" width="4" height="4"/><rect x="24" y="56" width="4" height="4"/><rect x="32" y="56" width="4" height="4"/><rect x="36" y="56" width="4" height="4"/><rect x="40" y="56" width="4" height="4"/><rect x="48" y="56" width="4" height="4"/><rect x="60" y="56" width="4" height="4"/><rect x="64" y="56" width="4" height="4"/><rect x="72" y="56" width="4" height="4"/><rect x="76" y="56" width="4" height="4"/><rect x="0" y="60" width="4" height="4"/><rect x="24" y="60" width="4" height="4"/><rect x="48" y="60" width="4" height="4"/><rect x="52" y="60" width="4" height="4"/><rect x="56" y="60" width="4" height="4"/><rect x="60" y="60" width="4" height="4"/><rect x="80" y="60" width="4" height="4"/><rect x="0" y="64" width="4" height="4"/><rect x="8" y="64" width="4" height="4"/><rect x="12" y="64" width="4" height="4"/><rect x="16" y="64" width="4" height="4"/><rect x="24" y="64" width="4" height="4"/><rect x="32" y="64" width="4" height="4"/><rect x="36" y="64" width="4" height="4"/><rect x="44" y="64" width="4" height="4"/><rect x="48" y="64" width="4" height="4"/><rect x="52" y="64" width="4" height="4"/><rect x="56" y="64" width="4" height="4"/><rect x="60" y="64" width="4" height="4"/><rect x="64" y="64" width="4" height="4"/><rect x="72" y="64" width="4" height="4"/><rect x="0" y="68" width="4" height="4"/><rect x="8" y="68" width="4" height="4"/><rect x="12" y="68" width="4" height="4"/><rect x="16" y="68" width="4" height="4"/><rect x="24" y="68" width="4" height="4"/><rect x="32" y="68" width="4" height="4"/><rect x="56" y="68" width="4" height="4"/><rect x="64" y="68" width="4" height="4"/><rect x="68" y="68" width="4" height="4"/><rect x="72" y="68" width="4" height="4"/><rect x="76" y="68" width="4" height="4"/><rect x="0" y="72" width="4" height="4"/><rect x="8" y="72" width="4" height="4"/><rect x="12" y="72" width="4" height="4"/><rect x="16" y="72" width="4" height="4"/><rect x="24" y="72" width="4" height="4"/><rect x="32" y="72" width="4" height="4"/><rect x="44" y="72" width="4" height="4"/><rect x="64" y="72" width="4" height="4"/><rect x="68" y="72" width="4" height="4"/><rect x="0" y="76" width="4" height="4"/><rect x="24" y="76" width="4" height="4"/><rect x="36" y="76" width="4" height="4"/><rect x="52" y="76" width="4" height="4"/><rect x="60" y="76" width="4" height="4"/><rect x="64" y="76" width="4" height="4"/><rect x="76" y="76" width="4" height="4"/><rect x="80" y="76" width="4" height="4"/><rect x="0" y="80" width="4" height="4"/><rect x="4" y="80" width="4" height="4"/><rect x="8" y="80" width="4" height="4"/><rect x="12" y="80" width="4" height="4"/><rect x="16" y="80" width="4" height="4"/><rect x="20" y="80" width="4" height="4"/><rect x="24" y="80" width="4" height="4"/><rect x="36" y="80" width="4" height="4"/><rect x="48" y="80" width="4" height="4"/><rect x="64" y="80" width="4" height="4"/><rect x="72" y="80" width="4" height="4"/><rect x="76" y="80" width="4" height="4"/></g></svg>
+									</div>
+									<p class="qr-caption">Scan with Google Files or Quick Share</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="feature-row rev">
+						<div class="feature-copy">
+							<p class="kicker">Local &amp; private</p>
+							<h2>Your files stay on your network.</h2>
+							<p class="lead">
+								Transfers go straight between your Mac and the phone over Wi-Fi. No
+								account, no cloud relay, no telemetry — and the whole thing is
+								MIT-licensed open source.
+							</p>
+							<ul class="feature-list">
+								<li>
+									<strong>LAN-only transport</strong>
+									<span>Nothing touches a server. If the Wi-Fi is off, nothing moves.</span>
+								</li>
+								<li>
+									<strong>No account, no tracking</strong>
+									<span>Install and go. No sign-up, no analytics, no ads.</span>
+								</li>
+								<li>
+									<strong>Open source</strong>
+									<span>MIT licensed. Read the code, file issues, send patches.</span>
+								</li>
+							</ul>
+						</div>
+						<div class="feature-media">
+							<div class="shot">
+								<div class="setrow">
+									<span class="setrow-label">Visible to nearby devices</span>
+									<span class="toggle"></span>
+								</div>
+								<div class="setrow">
+									<span class="setrow-label">Save received files</span>
+									<span class="setrow-value">Downloads</span>
+								</div>
+								<div class="setrow">
+									<span class="setrow-label">Ask before accepting</span>
+									<span class="setrow-value">Always</span>
+								</div>
+								<div class="setrow">
+									<span class="setrow-label">Appearance</span>
+									<span class="setrow-value">System</span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<section class="details" id="details">
+				<div class="container">
+					<div class="section-head">
+						<h2>Under the hood.</h2>
+						<p>The details, minus the buzzwords.</p>
+					</div>
+					<div class="details-card">
+						<dl class="details-row">
+							<dt>Platforms</dt>
+							<dd>macOS 14+ · Android 6+</dd>
+						</dl>
+						<dl class="details-row">
+							<dt>Protocol</dt>
+							<dd>Google Quick Share</dd>
+						</dl>
+						<dl class="details-row">
+							<dt>Discovery</dt>
+							<dd>mDNS on your local network</dd>
+						</dl>
+						<dl class="details-row">
+							<dt>Security</dt>
+							<dd>PIN-confirmed · encrypted · LAN-only</dd>
+						</dl>
+						<dl class="details-row">
+							<dt>Transfer size</dt>
+							<dd>No limits</dd>
+						</dl>
+						<dl class="details-row">
+							<dt>License</dt>
+							<dd>MIT · open source</dd>
+						</dl>
+					</div>
+				</div>
+			</section>
+
+			<section class="faq" id="faq">
+				<div class="container">
+					<div class="section-head">
+						<h2>Questions</h2>
+						<p>The ones people actually ask.</p>
+					</div>
+					<div class="faq-list">
+						<details>
+							<summary>Does it work with iPhone?</summary>
+							<p>
+								Not currently. Mac Share speaks the Android Quick Share protocol.
+								iPhone support would need a different transport, which isn't planned.
+							</p>
+						</details>
+						<details>
+							<summary>What about Windows and Linux?</summary>
+							<p>
+								Not yet — Mac Share is macOS-only today. The protocol is open and
+								documented, so a port is possible.
+							</p>
+						</details>
+						<details>
+							<summary>How fast are transfers?</summary>
+							<p>
+								As fast as your Wi-Fi. On the same network, expect 10–60 MB/s — no
+								internet round-trip and no upload limits.
+							</p>
+						</details>
+						<details>
+							<summary>Is it secure?</summary>
+							<p>
+								Transfers are PIN-confirmed and encrypted, and stay on your local
+								network. Nothing is uploaded to a server.
+							</p>
+						</details>
+						<details>
+							<summary>Where do received files go?</summary>
+							<p>Downloads by default. You can point it at any folder in Settings.</p>
+						</details>
+						<details>
+							<summary>Is it really free?</summary>
+							<p>
+								Yes. Mac Share is open source under the MIT license. There's no paid
+								tier and no telemetry.
+							</p>
+						</details>
+					</div>
+				</div>
+			</section>
+
+			<section class="cta-section" id="download">
+				<div class="container">
+					<img src="/app-icon.png" width="56" height="56" alt="Mac Share app icon" />
+					<h2>Send your first file.</h2>
+					<p>Free, open source, and ready in the menu bar.</p>
+					<div class="cta-center">
+						<a class="btn btn-primary btn-lg" href="https://github.com/imrj05/MacShare/releases">Download for macOS</a>
+						<a class="btn btn-secondary btn-lg" href="https://github.com/imrj05/MacShare">View on GitHub</a>
+					</div>
+					<p class="fine">macOS 14+ · Android 6+ · MIT License</p>
+				</div>
+			</section>
+		</main>
+
+		<footer>
+			<div class="container">
+				<div class="footer-grid">
+					<div class="footer-brand">
+						<a class="brand" href="/">
+							<img src="/app-icon.png" width="26" height="26" alt="" />
+							Mac Share
+						</a>
+						<p>
+							A macOS menu bar app for sending files between Mac and Android over
+							your local network.
+						</p>
+					</div>
+					<nav class="footer-col" aria-label="Product">
+						<h4>Product</h4>
+						<a href="#features">Features</a>
+						<a href="#details">Under the hood</a>
+						<a href="#faq">FAQ</a>
+						<a href="https://github.com/imrj05/MacShare/releases">Download</a>
+					</nav>
+					<nav class="footer-col" aria-label="Project">
+						<h4>Project</h4>
+						<a href="https://github.com/imrj05/MacShare">GitHub</a>
+						<a href="https://github.com/imrj05/MacShare/blob/main/PROTOCOL.md">Protocol</a>
+						<a href="https://github.com/imrj05/MacShare/blob/main/CHANGELOG">Changelog</a>
+						<a href="https://github.com/imrj05/MacShare/issues">Issues</a>
+					</nav>
+					<nav class="footer-col" aria-label="Resources">
+						<h4>Resources</h4>
+						<a href="https://github.com/imrj05/MacShare/releases/latest">Latest release</a>
+						<a href="https://github.com/imrj05/MacShare/blob/main/LICENSE">MIT License</a>
+						<a href="https://github.com/imrj05/MacShare/blob/main/README.md">Readme</a>
+					</nav>
+				</div>
+				<div class="footer-bottom">
+					<span>Mac Share — MIT License</span>
+					<span>v0.0.2 · Made for macOS</span>
+				</div>
+			</div>
+		</footer>
+
+		<script is:inline>
+			(function () {
+				var btn = document.getElementById("theme-toggle");
+				var mq = window.matchMedia("(prefers-color-scheme: dark)");
+				btn.addEventListener("click", function () {
+					var cur = document.documentElement.dataset.theme || (mq.matches ? "dark" : "light");
+					var next = cur === "dark" ? "light" : "dark";
+					document.documentElement.dataset.theme = next;
+					try {
+						localStorage.setItem("theme", next);
+					} catch (e) {}
+				});
+			})();
+		</script>
+	</body>
+</html>
